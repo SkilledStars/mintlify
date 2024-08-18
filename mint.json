@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "super.fans developers",
   "logo": {
-    "dark": "/logo/super-logo-white.png",
-    "light": "/logo/super-logo.png"
+    "dark": "/logo/super-logo-full-white.png",
+    "light": "/logo/super-logo-full.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
