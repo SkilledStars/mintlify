@@ -29,29 +29,19 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "API Reference2",
+      "openapi": "/api-reference/openapi.json",
+      "url": "api-reference",
+      "icon": "square-terminal"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Developer Dashboard",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    },
-    {
-      "name": "API Reference",
-      "openapi": "./openapi.json",
-      "url": "api-reference",
-      "icon": "square-terminal"
+      "url": "https://super.fans/enterprise/developers"
     }
   ],
   "navigation": [
