@@ -8,6 +8,11 @@
       "email": "support@super.fans"
     }
   },
+  "servers": [
+    {
+      "url": "https://api.super.fans/api/v1"
+    }
+  ],
   "security": [
     {
       "BearerAuth": []
@@ -18,6 +23,11 @@
       "get": {
         "summary": "Retrieve categorized ad affinities",
         "description": "Returns the top ad affinities categorized into three levels based on the provided parameters.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "dataTag",
@@ -172,6 +182,11 @@
     "/api/v1/ad-categories": {
       "get": {
         "summary": "Get ad categories statistics",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "dataTag",
@@ -327,6 +342,11 @@
     "/api/v1/ad-in-market-affinities": {
       "get": {
         "summary": "Get ad in-market affinities",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "dataTag",
@@ -487,6 +507,11 @@
       "get": {
         "summary": "Get channel counts",
         "description": "Retrieve filtered and original channel counts based on date range, keywords, and other parameters.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "startDate",
@@ -568,6 +593,11 @@
       "get": {
         "summary": "Get comments",
         "description": "Retrieve comments based on date range, keywords, and other parameters.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "startDate",
@@ -696,6 +726,11 @@
       "get": {
         "summary": "Get top detected languages",
         "description": "Retrieve top 5 detected languages based on date range, keywords, and other parameters.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "startDate",
@@ -786,6 +821,11 @@
       "get": {
         "summary": "Get group statistics",
         "description": "Retrieve group statistics based on date range, keywords, and other parameters.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "startDate",
@@ -1079,112 +1119,11 @@
       "get": {
         "summary": "Get keyword statistics",
         "description": "Retrieve keyword statistics based on date range, keywords, and other parameters.",
-        "parameters": [
+        "security": [
           {
-            "name": "startDate",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "Start date for the data range (YYYY-MM-DD)"
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "End date for the data range (YYYY-MM-DD)"
-          },
-          {
-            "name": "keywords",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comma-separated list of keywords to analyze"
-          },
-          {
-            "name": "requireAll",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["true", "false"]
-            },
-            "description": "Whether to require all keywords"
-          },
-          {
-            "name": "keyword_filterType",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Type of statistic to filter by (e.g., 'mentions')"
-          },
-          {
-            "name": "dataTag",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Data tag for filtering"
+            "BearerAuth": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "date": {
-                        "type": "string",
-                        "format": "date"
-                      }
-                    },
-                    "additionalProperties": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "example": [
-                  {
-                    "date": "2024-01-01",
-                    "football": 0,
-                    "nfl": 0
-                  },
-                  {
-                    "date": "2024-01-02",
-                    "football": 3,
-                    "nfl": 1
-                  },
-                  {
-                    "date": "2024-01-03",
-                    "football": 5,
-                    "nfl": 2
-                  }
-                ]
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/overall-score": {
-      "get": {
-        "summary": "Get overall score",
-        "description": "Retrieve an overall score based on date range, keywords, and other parameters.",
         "parameters": [
           {
             "name": "startDate",
