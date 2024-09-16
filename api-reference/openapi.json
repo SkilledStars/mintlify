@@ -1,1147 +1,167 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "dev-pipes-token",
-      "termsOfService": "https://ui.us-east.tinybird.co/terms",
-      "contact": {
-        "email": "support@tinybird.co"
-      }
-    },
-    "servers": [
-      {
-        "url": "https://api.us-east.tinybird.co/v0"
-      }
-    ],
-    "externalDocs": {
-      "description": "Tinybird Analytics documentation",
-      "url": "https://docs.tinybird.co"
-    },
-    "security": [
-      {
-        "TokenBearerHeader": [
-          ""
-        ]
-      },
-      {
-        "TokenQueryString": [
-          ""
-        ]
-      }
-    ],
-    "paths": {
-      "/pipes/video_matches.{format}": {
-        "get": {
-          "tags": ["Pipes"],
-          "summary": "video_matches",
-          "description": "",
-          "parameters": [
-            {
-              "in": "query",
-              "name": "typeStr",
-              "description": "",
-              "required": false,
-              "example": null,
-              "schema": {
-                "type": "string",
-                "default": "mentions"
-              }
-            },
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:video_matches", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:video_matches", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__video_matches"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "videoId",
-                        "type": "String"
-                      },
-                      {
-                        "name": "error",
-                        "type": "String"
-                      },
-                      {
-                        "name": "title",
-                        "type": "String"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "videoId": "fSRH40d6sX",
-                        "error": "b'",
-                        "title": "(U]p'l`"
-                      },
-                      {
-                        "videoId": "",
-                        "error": "6xGwg|(&Q",
-                        "title": "U6"
-                      },
-                      {
-                        "videoId": "=@ep]Vw~",
-                        "error": "^ipx|,=a5N",
-                        "title": "'%Y~t9"
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000821749,
-                      "rows_read": 3,
-                      "bytes_read": 135
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "\"fSRH40d6sX\",\"b'\",\"(U]p'l`\"\n\"\",\"6xGwg|(&Q\",\"U6\"\n\"=@ep]Vw~\",\"^ipx|,=a5N\",\"'%Y~t9\"\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "super.fans enterprise API",
+    "termsOfService": "https://super.fans",
+    "contact": {
+      "email": "support@super.fans"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/v1/ad-affinities": {
+      "get": {
+        "summary": "Retrieve categorized ad affinities",
+        "description": "Returns the top ad affinities categorized into three levels based on the provided parameters.",
+        "parameters": [
+          {
+            "name": "dataTag",
+            "in": "query",
+            "description": "The data tag to filter results",
+            "schema": {
+              "type": "string"
             }
           },
-          "operationId": "video_matches_get"
-        }
-      },
-      "/pipes/all_statistics.{format}": {
-        "get": {
-          "tags": ["Pipes"],
-          "summary": "all_statistics",
-          "description": "",
-          "parameters": [
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:all_statistics", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:all_statistics", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "replies",
-                        "type": "Int64"
-                      },
-                      {
-                        "name": "likes",
-                        "type": "Int64"
-                      },
-                      {
-                        "name": "mentions",
-                        "type": "UInt64"
-                      },
-                      {
-                        "name": "sentiment",
-                        "type": "Float64"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "replies": 2804162938822577320,
-                        "likes": 5935810273536892891,
-                        "mentions": 15657812979985370729,
-                        "sentiment": -3.014080971435583e-286
-                      },
-                      {
-                        "replies": 7885388429666205427,
-                        "likes": 368066018677693974,
-                        "mentions": 18371568619324220532,
-                        "sentiment": null
-                      },
-                      {
-                        "replies": 4357435422797280898,
-                        "likes": 8124171311239967992,
-                        "mentions": 821735343441964030,
-                        "sentiment": -2.6774132404843463e217
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000787558,
-                      "rows_read": 3,
-                      "bytes_read": 96
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "2804162938822577320,5935810273536892891,15657812979985370729,-3.014080971435583e-286\n7885388429666205427,368066018677693974,18371568619324220532,nan\n4357435422797280898,8124171311239967992,821735343441964030,-2.6774132404843463e217\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Start date for filtering data (YYYY-MM-DD), defaults to 1950-01-01",
+            "schema": {
+              "type": "string",
+              "format": "date"
             }
           },
-          "operationId": "all_statistics_get"
-        }
-      },
-      "/pipes/all_statistics_per_day_of_week.{format}": {
-        "get": {
-          "tags": ["Pipes"],
-          "summary": "all_statistics_per_day_of_week",
-          "description": "",
-          "parameters": [
-            {
-              "in": "query",
-              "name": "typeStr",
-              "description": "",
-              "required": false,
-              "example": null,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": [
-                "PIPES:READ:all_statistics_per_day_of_week",
-                "ADMIN"
-              ]
-            },
-            {
-              "TokenQueryString": [
-                "PIPES:READ:all_statistics_per_day_of_week",
-                "ADMIN"
-              ]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_per_day_of_week"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "day_of_week",
-                        "type": "UInt8"
-                      },
-                      {
-                        "name": "likes",
-                        "type": "Float64"
-                      },
-                      {
-                        "name": "sentiment",
-                        "type": "Float64"
-                      },
-                      {
-                        "name": "mentions",
-                        "type": "UInt64"
-                      },
-                      {
-                        "name": "replies",
-                        "type": "Int64"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "day_of_week": 168,
-                        "likes": 1.3470253913849581e219,
-                        "sentiment": 4.645740593187226e-284,
-                        "mentions": 18371568619324220532,
-                        "replies": -2776833771540858
-                      },
-                      {
-                        "day_of_week": 204,
-                        "likes": 2.144155604953677e-17,
-                        "sentiment": 1.2262973812461839e235,
-                        "mentions": 821735343441964030,
-                        "replies": -1363628932535403038
-                      },
-                      {
-                        "day_of_week": 213,
-                        "likes": 6.458977002410942e88,
-                        "sentiment": -1.4319274895836525e122,
-                        "mentions": 9558594037060121162,
-                        "replies": 1355609803008819271
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000731915,
-                      "rows_read": 3,
-                      "bytes_read": 99
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "168,1.3470253913849581e219,4.645740593187226e-284,18371568619324220532,-2776833771540858\n204,2.144155604953677e-17,1.2262973812461839e235,821735343441964030,-1363628932535403038\n213,6.458977002410942e88,-1.4319274895836525e122,9558594037060121162,1355609803008819271\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
-            }
-          },
-          "operationId": "all_statistics_per_day_of_week_get"
-        }
-      },
-      "/pipes/all_statistics_daily.{format}": {
-        "get": {
-          "tags": ["Pipes"],
-          "summary": "all_statistics_daily",
-          "description": "",
-          "parameters": [
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:all_statistics_daily", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:all_statistics_daily", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_daily"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "date",
-                        "type": "Date"
-                      },
-                      {
-                        "name": "likes",
-                        "type": "Float64"
-                      },
-                      {
-                        "name": "sentiment",
-                        "type": "Float64"
-                      },
-                      {
-                        "name": "mentions",
-                        "type": "UInt64"
-                      },
-                      {
-                        "name": "replies",
-                        "type": "Int64"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "day_of_week": 168,
-                        "likes": 1.3470253913849581e219,
-                        "sentiment": 4.645740593187226e-284,
-                        "mentions": 18371568619324220532,
-                        "replies": -2776833771540858
-                      },
-                      {
-                        "day_of_week": 204,
-                        "likes": 2.144155604953677e-17,
-                        "sentiment": 1.2262973812461839e235,
-                        "mentions": 821735343441964030,
-                        "replies": -1363628932535403038
-                      },
-                      {
-                        "day_of_week": 213,
-                        "likes": 6.458977002410942e88,
-                        "sentiment": -1.4319274895836525e122,
-                        "mentions": 9558594037060121162,
-                        "replies": 1355609803008819271
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000731915,
-                      "rows_read": 3,
-                      "bytes_read": 99
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "168,1.3470253913849581e219,4.645740593187226e-284,18371568619324220532,-2776833771540858\n204,2.144155604953677e-17,1.2262973812461839e235,821735343441964030,-1363628932535403038\n213,6.458977002410942e88,-1.4319274895836525e122,9558594037060121162,1355609803008819271\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
-            }
-          },
-          "operationId": "all_statistics_per_day_of_week_post",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "typeStr": {
-                      "type": "string",
-                      "description": ""
-                    }
-                  }
-                }
-              },
-              "application/x-www-form-urlencoded": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "typeStr": {
-                      "type": "string",
-                      "description": ""
-                    }
-                  }
-                }
-              }
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date for filtering data (YYYY-MM-DD), defaults to today's date",
+            "schema": {
+              "type": "string",
+              "format": "date"
             }
           }
-        }
-      },
-      "/pipes/all_statistics_daily.{format}": {
-        "get": {
-          "tags": ["Pipes"],
-          "summary": "all_statistics_daily",
-          "description": "",
-          "parameters": [
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:all_statistics_daily", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:all_statistics_daily", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_daily"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "date",
-                        "type": "Date"
-                      },
-                      {
-                        "name": "sentiment",
-                        "type": "Float64"
-                      },
-                      {
-                        "name": "replies",
-                        "type": "Int64"
-                      },
-                      {
-                        "name": "likes",
-                        "type": "Int64"
-                      },
-                      {
-                        "name": "mentions",
-                        "type": "UInt64"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "date": "2113-06-12",
-                        "sentiment": 1.3470253913849581e219,
-                        "replies": 368066018677693974,
-                        "likes": -75175454385331084,
-                        "mentions": 18443967239938010758
-                      },
-                      {
-                        "date": "2141-08-09",
-                        "sentiment": 2.144155604953677e-17,
-                        "replies": 8124171311239967992,
-                        "likes": 821735343441964030,
-                        "mentions": 17083115141174148578
-                      },
-                      {
-                        "date": "2039-08-16",
-                        "sentiment": 6.458977002410942e88,
-                        "replies": -2788931093724180887,
-                        "likes": -8888150036649430454,
-                        "mentions": 1355609803008819271
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000665388,
-                      "rows_read": 3,
-                      "bytes_read": 102
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "\"2113-06-12\",1.3470253913849581e219,368066018677693974,-75175454385331084,18443967239938010758\n\"2141-08-09\",2.144155604953677e-17,8124171311239967992,821735343441964030,17083115141174148578\n\"2039-08-16\",6.458977002410942e88,-2788931093724180887,-8888150036649430454,1355609803008819271\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
-            }
-          },
-          "operationId": "all_statistics_daily_get"
-        },
-        "post": {
-          "tags": ["Pipes"],
-          "summary": "all_statistics_daily",
-          "description": "",
-          "parameters": [
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:all_statistics_daily", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:all_statistics_daily", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_daily"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "date",
-                        "type": "Date"
-                      },
-                      {
-                        "name": "sentiment",
-                        "type": "Float64"
-                      },
-                      {
-                        "name": "replies",
-                        "type": "Int64"
-                      },
-                      {
-                        "name": "likes",
-                        "type": "Int64"
-                      },
-                      {
-                        "name": "mentions",
-                        "type": "UInt64"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "date": "2113-06-12",
-                        "sentiment": 1.3470253913849581e219,
-                        "replies": 368066018677693974,
-                        "likes": -75175454385331084,
-                        "mentions": 18443967239938010758
-                      },
-                      {
-                        "date": "2141-08-09",
-                        "sentiment": 2.144155604953677e-17,
-                        "replies": 8124171311239967992,
-                        "likes": 821735343441964030,
-                        "mentions": 17083115141174148578
-                      },
-                      {
-                        "date": "2039-08-16",
-                        "sentiment": 6.458977002410942e88,
-                        "replies": -2788931093724180887,
-                        "likes": -8888150036649430454,
-                        "mentions": 1355609803008819271
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000665388,
-                      "rows_read": 3,
-                      "bytes_read": 102
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "\"2113-06-12\",1.3470253913849581e219,368066018677693974,-75175454385331084,18443967239938010758\n\"2141-08-09\",2.144155604953677e-17,8124171311239967992,821735343441964030,17083115141174148578\n\"2039-08-16\",6.458977002410942e88,-2788931093724180887,-8888150036649430454,1355609803008819271\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
-            }
-          },
-          "operationId": "all_statistics_daily_post",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "application/x-www-form-urlencoded": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        }
-      },
-      "/pipes/sample_comments.{format}": {
-        "get": {
-          "tags": ["Pipes"],
-          "summary": "sample_comments",
-          "description": "",
-          "parameters": [
-            {
-              "in": "query",
-              "name": "typeStr",
-              "description": "",
-              "required": false,
-              "example": null,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:sample_comments", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:sample_comments", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__sample_comments"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "data_textOriginal",
-                        "type": "String"
-                      },
-                      {
-                        "name": "data_authorChannel_Id_value",
-                        "type": "String"
-                      },
-                      {
-                        "name": "data_authorProfileImageUrl",
-                        "type": "String"
-                      },
-                      {
-                        "name": "data_likeCount",
-                        "type": "Int32"
-                      },
-                      {
-                        "name": "numReplies",
-                        "type": "Int16"
-                      },
-                      {
-                        "name": "ai_sentiment_mock",
-                        "type": "Float32"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "data_textOriginal": "fSRH40d6sX",
-                        "data_authorChannel_Id_value": "b'",
-                        "data_authorProfileImageUrl": "(U]p'l`",
-                        "data_likeCount": -852056475,
-                        "numReplies": -26460,
-                        "ai_sentiment_mock": -12512000
-                      },
-                      {
-                        "data_textOriginal": "",
-                        "data_authorChannel_Id_value": "6xGwg|(&Q",
-                        "data_authorProfileImageUrl": "U6",
-                        "data_likeCount": -80126721,
-                        "numReplies": -7639,
-                        "ai_sentiment_mock": 4.607553e31
-                      },
-                      {
-                        "data_textOriginal": "=@ep]Vw~",
-                        "data_authorChannel_Id_value": "^ipx|,=a5N",
-                        "data_authorProfileImageUrl": "'%Y~t9",
-                        "data_likeCount": 2026080544,
-                        "numReplies": -23692,
-                        "ai_sentiment_mock": -2110969800000000000
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000810835,
-                      "rows_read": 3,
-                      "bytes_read": 165
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "\"fSRH40d6sX\",\"b'\",\"(U]p'l`\",-852056475,-26460,-12512000\n\"\",\"6xGwg|(&Q\",\"U6\",-80126721,-7639,4.607553e31\n\"=@ep]Vw~\",\"^ipx|,=a5N\",\"'%Y~t9\",2026080544,-23692,-2110969800000000000\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
-            }
-          },
-          "operationId": "sample_comments_get"
-        },
-        "post": {
-          "tags": ["Pipes"],
-          "summary": "sample_comments",
-          "description": "",
-          "parameters": [
-            {
-              "name": "format",
-              "required": true,
-              "in": "path",
-              "description": "Response format: `json` or `csv`",
-              "schema": {
-                "type": "string",
-                "default": "json",
-                "enum": ["json", "csv"]
-              }
-            },
-            {
-              "name": "q",
-              "required": false,
-              "in": "query",
-              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "security": [
-            {
-              "TokenBearerHeader": ["PIPES:READ:sample_comments", "ADMIN"]
-            },
-            {
-              "TokenQueryString": ["PIPES:READ:sample_comments", "ADMIN"]
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Endpoint result",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryJSONResponse__sample_comments"
-                  },
-                  "example": {
-                    "meta": [
-                      {
-                        "name": "data_textOriginal",
-                        "type": "String"
-                      },
-                      {
-                        "name": "data_authorChannel_Id_value",
-                        "type": "String"
-                      },
-                      {
-                        "name": "data_authorProfileImageUrl",
-                        "type": "String"
-                      },
-                      {
-                        "name": "data_likeCount",
-                        "type": "Int32"
-                      },
-                      {
-                        "name": "numReplies",
-                        "type": "Int16"
-                      },
-                      {
-                        "name": "ai_sentiment_mock",
-                        "type": "Float32"
-                      }
-                    ],
-                    "data": [
-                      {
-                        "data_textOriginal": "fSRH40d6sX",
-                        "data_authorChannel_Id_value": "b'",
-                        "data_authorProfileImageUrl": "(U]p'l`",
-                        "data_likeCount": -852056475,
-                        "numReplies": -26460,
-                        "ai_sentiment_mock": -12512000
-                      },
-                      {
-                        "data_textOriginal": "",
-                        "data_authorChannel_Id_value": "6xGwg|(&Q",
-                        "data_authorProfileImageUrl": "U6",
-                        "data_likeCount": -80126721,
-                        "numReplies": -7639,
-                        "ai_sentiment_mock": 4.607553e31
-                      },
-                      {
-                        "data_textOriginal": "=@ep]Vw~",
-                        "data_authorChannel_Id_value": "^ipx|,=a5N",
-                        "data_authorProfileImageUrl": "'%Y~t9",
-                        "data_likeCount": 2026080544,
-                        "numReplies": -23692,
-                        "ai_sentiment_mock": -2110969800000000000
-                      }
-                    ],
-                    "rows": 3,
-                    "rows_before_limit_at_least": 3,
-                    "statistics": {
-                      "elapsed": 0.000810835,
-                      "rows_read": 3,
-                      "bytes_read": 165
-                    }
-                  }
-                },
-                "text/csv": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
-                  },
-                  "example": "\"fSRH40d6sX\",\"b'\",\"(U]p'l`\",-852056475,-26460,-12512000\n\"\",\"6xGwg|(&Q\",\"U6\",-80126721,-7639,4.607553e31\n\"=@ep]Vw~\",\"^ipx|,=a5N\",\"'%Y~t9\",2026080544,-23692,-2110969800000000000\n"
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "403": {
-              "$ref": "#/components/responses/ForbiddenError"
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFoundError"
-            },
-            "405": {
-              "$ref": "#/components/responses/MethodNotAllowedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
-            }
-          },
-          "operationId": "sample_comments_post",
-          "requestBody": {
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved categories",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "typeStr": {
-                      "type": "string",
-                      "description": ""
+                    "categories": {
+                      "type": "object",
+                      "properties": {
+                        "category1": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "percent": { "type": "string" }
+                            }
+                          }
+                        },
+                        "category2": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "percent": { "type": "string" }
+                            }
+                          }
+                        },
+                        "category3": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "percent": { "type": "string" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "validResponse": {
+                    "value": {
+                      "categories": {
+                        "category1": [
+                          {
+                            "name": "Sports & Fitness",
+                            "percent": "41.98"
+                          },
+                          {
+                            "name": "Media & Entertainment",
+                            "percent": "41.06"
+                          },
+                          {
+                            "name": "Lifestyles & Hobbies",
+                            "percent": "12.24"
+                          }
+                        ],
+                        "category2": [
+                          {
+                            "name": "Sports Fans",
+                            "percent": "36.99"
+                          },
+                          {
+                            "name": "TV Lovers",
+                            "percent": "27.75"
+                          },
+                          {
+                            "name": "Outdoor Enthusiasts",
+                            "percent": "9.17"
+                          }
+                        ],
+                        "category3": [
+                          {
+                            "name": "American Football Fans",
+                            "percent": "27.27"
+                          },
+                          {
+                            "name": "Sports Fans",
+                            "percent": "16.31"
+                          },
+                          {
+                            "name": "Sports Game Fans",
+                            "percent": "9.30"
+                          }
+                        ]
+                      }
                     }
                   }
                 }
-              },
-              "application/x-www-form-urlencoded": {
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "typeStr": {
-                      "type": "string",
-                      "description": ""
-                    }
-                  }
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Unkey error"
                 }
               }
             }
@@ -1149,349 +169,1733 @@
         }
       }
     },
-    "components": {
-      "securitySchemes": {
-        "TokenBearerHeader": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
-        },
-        "TokenQueryString": {
-          "type": "apiKey",
-          "in": "query",
-          "name": "token"
+    "/api/v1/ad-categories": {
+      "get": {
+        "summary": "Get ad categories statistics",
+        "parameters": [
+          {
+            "name": "dataTag",
+            "in": "query",
+            "description": "Input tag to filter data",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Start date in YYYY-MM-DD format",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date in YYYY-MM-DD format",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with ad categories statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "object",
+                      "properties": {
+                        "category1": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the category"
+                              },
+                              "percent": {
+                                "type": "string",
+                                "description": "Percentage represented as a string with two decimal places"
+                              }
+                            }
+                          }
+                        },
+                        "category2": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the category"
+                              },
+                              "percent": {
+                                "type": "string",
+                                "description": "Percentage represented as a string with two decimal places"
+                              }
+                            }
+                          }
+                        },
+                        "category3": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the category"
+                              },
+                              "percent": {
+                                "type": "string",
+                                "description": "Percentage represented as a string with two decimal places"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "categories": {
+                    "category1": [
+                      {
+                        "name": "Sports",
+                        "percent": "51.91"
+                      },
+                      {
+                        "name": "Arts & Entertainment",
+                        "percent": "19.24"
+                      },
+                      {
+                        "name": "News",
+                        "percent": "13.35"
+                      }
+                    ],
+                    "category2": [
+                      {
+                        "name": "Team Sports",
+                        "percent": "17.53"
+                      },
+                      {
+                        "name": "TV & Video",
+                        "percent": "15.31"
+                      },
+                      {
+                        "name": "Sports News",
+                        "percent": "15.19"
+                      }
+                    ],
+                    "category3": [
+                      {
+                        "name": "American Football",
+                        "percent": "28.92"
+                      },
+                      {
+                        "name": "TV Shows & Programs",
+                        "percent": "15.70"
+                      },
+                      {
+                        "name": "American Football Fans",
+                        "percent": "10.20"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         }
-      },
-      "responses": {
-        "BadRequestError": {
-          "description": "Invalid or malformed user input: check your SQL, parameters, and encoding"
-        },
-        "UnauthorizedError": {
-          "description": "Unauthorized request"
-        },
-        "ForbiddenError": {
-          "description": "Access token is missing or invalid: the request does not have enough permissions to be completed"
-        },
-        "NotFoundError": {
-          "description": "Resource not found: the data source, pipe, or endpoint is missing"
-        },
-        "MethodNotAllowedError": {
-          "description": "The method is not allowed in this resource"
-        },
-        "InternalServerError": {
-          "description": "Server could not fulfill the request due to an internal problem: contact support@tinybird.co"
+      }
+    },
+    "/api/v1/ad-in-market-affinities": {
+      "get": {
+        "summary": "Get ad in-market affinities",
+        "parameters": [
+          {
+            "name": "dataTag",
+            "in": "query",
+            "description": "Input data tag",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Start date in YYYY-MM-DD format",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date in YYYY-MM-DD format",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with categories data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "object",
+                      "properties": {
+                        "category1": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Category name"
+                              },
+                              "percent": {
+                                "type": "string",
+                                "description": "Percentage representation of the category"
+                              }
+                            }
+                          }
+                        },
+                        "category2": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Category name"
+                              },
+                              "percent": {
+                                "type": "string",
+                                "description": "Percentage representation of the category"
+                              }
+                            }
+                          }
+                        },
+                        "category3": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Category name"
+                              },
+                              "percent": {
+                                "type": "string",
+                                "description": "Percentage representation of the category"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Sample Output": {
+                    "value": {
+                      "categories": {
+                        "category1": [
+                          {
+                            "name": "Sports",
+                            "percent": "30.08"
+                          },
+                          {
+                            "name": "Travel",
+                            "percent": "22.54"
+                          },
+                          {
+                            "name": "Sports & Fitness",
+                            "percent": "20.40"
+                          }
+                        ],
+                        "category2": [
+                          {
+                            "name": "Travel Buffs",
+                            "percent": "19.26"
+                          },
+                          {
+                            "name": "Sporting Goods",
+                            "percent": "16.24"
+                          },
+                          {
+                            "name": "Sports Fans",
+                            "percent": "13.52"
+                          }
+                        ],
+                        "category3": [
+                          {
+                            "name": "American Football Fans",
+                            "percent": "8.15"
+                          },
+                          {
+                            "name": "Family Vacationers",
+                            "percent": "7.76"
+                          },
+                          {
+                            "name": "American Football Equipment",
+                            "percent": "7.46"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access"
+          },
+          "500": {
+            "description": "Server error"
+          }
         }
-      },
-      "schemas": {
-        "ApiQueryJSONResponseMetaItem": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            }
-          }
-        },
-        "ApiQueryJSONResponseStatistics": {
-          "type": "object",
-          "properties": {
-            "elapsed": {
-              "type": "number"
-            },
-            "rows_read": {
-              "type": "number"
-            },
-            "bytes_read": {
-              "type": "number"
-            }
-          }
-        },
-        "ApiQueryJSONResponseDataItem": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
-        "ApiQueryJSONResponse": {
-          "type": "object",
-          "properties": {
-            "meta": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
-              }
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem"
-              }
-            },
-            "rows": {
-              "type": "number"
-            },
-            "rows_before_limit_at_least": {
-              "type": "number"
-            },
-            "statistics": {
-              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
-            }
-          },
-          "required": ["meta", "data", "rows", "statistics"]
-        },
-        "ApiQueryCSVResponse": {
-          "type": "string",
-          "format": "csv"
-        },
-        "ApiQueryJSONResponseDataItem__video_matches": {
-          "type": "object",
-          "properties": {
-            "videoId": {
-              "type": "string"
-            },
-            "error": {
-              "type": "string"
-            },
-            "title": {
-              "type": "string"
-            }
-          }
-        },
-        "ApiQueryJSONResponse__video_matches": {
-          "type": "object",
-          "properties": {
-            "meta": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
-              }
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__video_matches"
-              }
-            },
-            "rows": {
-              "type": "number"
-            },
-            "rows_before_limit_at_least": {
-              "type": "number"
-            },
-            "statistics": {
-              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
-            }
-          },
-          "required": ["meta", "data", "rows", "statistics"]
-        },
-        "ApiQueryJSONResponseDataItem__all_statistics": {
-          "type": "object",
-          "properties": {
-            "replies": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "likes": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "mentions": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "sentiment": {
-              "type": "number",
-              "format": "double"
-            }
-          }
-        },
-        "ApiQueryJSONResponse__all_statistics": {
-          "type": "object",
-          "properties": {
-            "meta": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
-              }
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics"
-              }
-            },
-            "rows": {
-              "type": "number"
-            },
-            "rows_before_limit_at_least": {
-              "type": "number"
-            },
-            "statistics": {
-              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
-            }
-          },
-          "required": ["meta", "data", "rows", "statistics"]
-        },
-        "ApiQueryJSONResponseDataItem__all_statistics_per_day_of_week": {
-          "type": "object",
-          "properties": {
-            "day_of_week": {
-              "type": "integer",
-              "format": "uint8"
-            },
-            "likes": {
-              "type": "number",
-              "format": "double"
-            },
-            "sentiment": {
-              "type": "number",
-              "format": "double"
-            },
-            "mentions": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "replies": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        },
-        "ApiQueryJSONResponse__all_statistics_per_day_of_week": {
-          "type": "object",
-          "properties": {
-            "meta": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
-              }
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics_per_day_of_week"
-              }
-            },
-            "rows": {
-              "type": "number"
-            },
-            "rows_before_limit_at_least": {
-              "type": "number"
-            },
-            "statistics": {
-              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
-            }
-          },
-          "required": ["meta", "data", "rows", "statistics"]
-        },
-        "ApiQueryJSONResponseDataItem__all_statistics_daily": {
-          "type": "object",
-          "properties": {
-            "date": {
+      }
+    },
+    "/api/v1/channel-count": {
+      "get": {
+        "summary": "Get channel counts",
+        "description": "Retrieve filtered and original channel counts based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
               "type": "string",
               "format": "date"
             },
-            "sentiment": {
-              "type": "number",
-              "format": "double"
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
             },
-            "replies": {
-              "type": "integer",
-              "format": "int64"
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
             },
-            "likes": {
-              "type": "integer",
-              "format": "int64"
+            "description": "Keywords to filter the data"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
             },
-            "mentions": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
           }
-        },
-        "ApiQueryJSONResponse__all_statistics_daily": {
-          "type": "object",
-          "properties": {
-            "meta": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "filteredCount": {
+                      "type": "integer"
+                    },
+                    "originalCount": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "example": {
+                  "filteredCount": 1,
+                  "originalCount": 1
+                }
               }
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics_daily"
-              }
-            },
-            "rows": {
-              "type": "number"
-            },
-            "rows_before_limit_at_least": {
-              "type": "number"
-            },
-            "statistics": {
-              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
             }
           },
-          "required": ["meta", "data", "rows", "statistics"]
-        },
-        "ApiQueryJSONResponseDataItem__sample_comments": {
-          "type": "object",
-          "properties": {
-            "data_textOriginal": {
-              "type": "string"
-            },
-            "data_authorChannel_Id_value": {
-              "type": "string"
-            },
-            "data_authorProfileImageUrl": {
-              "type": "string"
-            },
-            "data_likeCount": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "numReplies": {
-              "type": "integer",
-              "format": "int16"
-            },
-            "ai_sentiment_mock": {
-              "type": "number",
-              "format": "float"
-            }
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        },
-        "ApiQueryJSONResponse__sample_comments": {
-          "type": "object",
-          "properties": {
-            "meta": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+        }
+      }
+    },
+    "/api/v1/comments-explorer": {
+      "get": {
+        "summary": "Get comments",
+        "description": "Retrieve comments based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keywords to filter the comments"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "comments_sortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Field to sort comments by"
+          },
+          {
+            "name": "comments_orderBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            },
+            "description": "Order direction for sorting"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "profileImage": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "time": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "sentiment": {
+                        "type": "number"
+                      },
+                      "likes": {
+                        "type": "integer"
+                      },
+                      "replies": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "username": "@Black4Cook",
+                    "profileImage": "https://yt3.ggpht.com/ytc/AIdro_kehdObPOZPnPCT81qv9gb76Qk9kaZeLjRebzRzAkwKgA=s48-c-k-c0x00ffffff-no-rj",
+                    "text": "@@carolinaaparecida4368 No problem, I am annoyed by the ignorance of certain people who think they know everything but don't take 5 minutes to do their research. Certain US-Americans really don't know what is happening outside the country's borders but pretend to know.",
+                    "time": "2024-09-09 19:47:20",
+                    "sentiment": 4,
+                    "likes": 0,
+                    "replies": 0
+                  }
+                ]
               }
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__sample_comments"
-              }
-            },
-            "rows": {
-              "type": "number"
-            },
-            "rows_before_limit_at_least": {
-              "type": "number"
-            },
-            "statistics": {
-              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
             }
           },
-          "required": ["meta", "data", "rows", "statistics"]
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/detected-languages": {
+      "get": {
+        "summary": "Get top detected languages",
+        "description": "Retrieve top 5 detected languages based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keywords to filter the data"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string"
+                      },
+                      "count": {
+                        "type": "integer"
+                      },
+                      "percentage": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "code": "en",
+                    "count": 316403,
+                    "percentage": 99.92
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/group-stats": {
+      "get": {
+        "summary": "Get group statistics",
+        "description": "Retrieve group statistics based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keywords to filter the data"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalMentions": {
+                      "type": "object",
+                      "properties": {
+                        "stat": {
+                          "type": "string"
+                        },
+                        "chartData": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "day_of_week": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalEngagement": {
+                      "type": "object",
+                      "properties": {
+                        "stat": {
+                          "type": "string"
+                        },
+                        "chartData": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "day_of_week": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "avgSentiment": {
+                      "type": "object",
+                      "properties": {
+                        "stat": {
+                          "type": "string"
+                        },
+                        "chartData": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "day_of_week": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "commentReplies": {
+                      "type": "object",
+                      "properties": {
+                        "stat": {
+                          "type": "string"
+                        },
+                        "chartData": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "day_of_week": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "totalMentions": {
+                    "stat": "316,648",
+                    "chartData": [
+                      {
+                        "day_of_week": "Sunday",
+                        "value": 34860
+                      },
+                      {
+                        "day_of_week": "Monday",
+                        "value": 58581
+                      },
+                      {
+                        "day_of_week": "Tuesday",
+                        "value": 64041
+                      },
+                      {
+                        "day_of_week": "Wednesday",
+                        "value": 56337
+                      },
+                      {
+                        "day_of_week": "Thursday",
+                        "value": 52788
+                      },
+                      {
+                        "day_of_week": "Friday",
+                        "value": 33068
+                      },
+                      {
+                        "day_of_week": "Saturday",
+                        "value": 16973
+                      }
+                    ]
+                  },
+                  "totalEngagement": {
+                    "stat": "2,050,207",
+                    "chartData": [
+                      {
+                        "day_of_week": "Sunday",
+                        "value": 10.55
+                      },
+                      {
+                        "day_of_week": "Monday",
+                        "value": 7.12
+                      },
+                      {
+                        "day_of_week": "Tuesday",
+                        "value": 6.17
+                      },
+                      {
+                        "day_of_week": "Wednesday",
+                        "value": 6.79
+                      },
+                      {
+                        "day_of_week": "Thursday",
+                        "value": 6.68
+                      },
+                      {
+                        "day_of_week": "Friday",
+                        "value": 3.3
+                      },
+                      {
+                        "day_of_week": "Saturday",
+                        "value": 1.5
+                      }
+                    ]
+                  },
+                  "avgSentiment": {
+                    "stat": "4.32",
+                    "chartData": [
+                      {
+                        "day_of_week": "Sunday",
+                        "value": 4.3
+                      },
+                      {
+                        "day_of_week": "Monday",
+                        "value": 4.26
+                      },
+                      {
+                        "day_of_week": "Tuesday",
+                        "value": 4.29
+                      },
+                      {
+                        "day_of_week": "Wednesday",
+                        "value": 4.33
+                      },
+                      {
+                        "day_of_week": "Thursday",
+                        "value": 4.44
+                      },
+                      {
+                        "day_of_week": "Friday",
+                        "value": 4.39
+                      },
+                      {
+                        "day_of_week": "Saturday",
+                        "value": 4.23
+                      }
+                    ]
+                  },
+                  "commentReplies": {
+                    "stat": "156,499",
+                    "chartData": [
+                      {
+                        "day_of_week": "Sunday",
+                        "value": 28297
+                      },
+                      {
+                        "day_of_week": "Monday",
+                        "value": 34880
+                      },
+                      {
+                        "day_of_week": "Tuesday",
+                        "value": 34036
+                      },
+                      {
+                        "day_of_week": "Wednesday",
+                        "value": 28042
+                      },
+                      {
+                        "day_of_week": "Thursday",
+                        "value": 25243
+                      },
+                      {
+                        "day_of_week": "Friday",
+                        "value": 4840
+                      },
+                      {
+                        "day_of_week": "Saturday",
+                        "value": 1161
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/keyword-chart": {
+      "get": {
+        "summary": "Get keyword statistics",
+        "description": "Retrieve keyword statistics based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of keywords to analyze"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "keyword_filterType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Type of statistic to filter by (e.g., 'mentions')"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "format": "date"
+                      }
+                    },
+                    "additionalProperties": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "date": "2024-01-01",
+                    "football": 0,
+                    "nfl": 0
+                  },
+                  {
+                    "date": "2024-01-02",
+                    "football": 3,
+                    "nfl": 1
+                  },
+                  {
+                    "date": "2024-01-03",
+                    "football": 5,
+                    "nfl": 2
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/overall-score": {
+      "get": {
+        "summary": "Get overall score",
+        "description": "Retrieve an overall score based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keywords to filter the data"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "score": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  }
+                },
+                "example": {
+                  "score": 100
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/popular-keywords": {
+      "get": {
+        "summary": "Get popular keywords",
+        "description": "Retrieve popular keywords based on the provided data tag.",
+        "parameters": [
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering keywords"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "NFL",
+                  "football",
+                  "Pat McAfee",
+                  "fans",
+                  "team",
+                  "sports",
+                  "game",
+                  "Super Bowl",
+                  "show",
+                  "playoffs",
+                  "money",
+                  "players",
+                  "trade",
+                  "quarterback",
+                  "Aaron Rodgers",
+                  "contract",
+                  "coaching",
+                  "QB",
+                  "Football",
+                  "Chiefs"
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/top-videos": {
+      "get": {
+        "summary": "Get top videos",
+        "description": "Retrieve top videos based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keywords to filter the videos"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          },
+          {
+            "name": "content_filterType",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["sentiment", "likes", "mentions", "replies"]
+            },
+            "description": "Type of content filter to apply"
+          },
+          {
+            "name": "content_category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["channel", "video"]
+            },
+            "description": "Category of content to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "thumbnail": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/__dBgzkonUA/default.jpg",
+                    "title": "NATIONAL DISASTER: Japan Beats Team USA National Team In Football... HOW DID THIS HAPPEN?!",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/vWAmEEhp72U/default.jpg",
+                    "title": "NFL Has Officially Banned \"Hip Drop Tackle\" Despite Players & NFLPA Objections | Pat McAfee Reacts",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/bPKhsBAL_08/default.jpg",
+                    "title": "Players HATE NFL's New Proposed 15 Yard Penalty For Vague \"Hip Drop Tackle\" | Pat McAfee Reacts",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/KIHpdEcAdNQ/default.jpg",
+                    "title": "Chiefs Sign Rugby Star, Built Like An ANIMAL | Pat McAfee Reacts",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/j5xBlwtoEjs/default.jpg",
+                    "title": "Massive Sunday Ticket Lawsuit May Change How We Watch NFL Forever... | Pat McAfee Reacts",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/rbRrXI83_Co/default.jpg",
+                    "title": "Pat McAfee Breaks Down The New NFL's \"Hybrid Kickoff\" Proposal That May Not Ruin Football",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/_lVA4SvZ_As/default.jpg",
+                    "title": "People Are PISSED About The Chiefs (& Taylor Swift) Making It To The Super Bowl | Pat McAfee Reacts",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/c6_6gk7ZeKk/default.jpg",
+                    "title": "NFL Debuted New Kickoff & People Are Split On It | Pat McAfee Reacts",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/p-khNWHr1Yo/default.jpg",
+                    "title": "Aaron Rodgers Issues Response To Jimmy Kimmel's Monologue About Him | Pat McAfee Show",
+                    "value": "0"
+                  },
+                  {
+                    "thumbnail": "https://i.ytimg.com/vi/a5F9EdAZJfs/default.jpg",
+                    "title": "Nick Saban Gives BRUTALLY Honest Take On The State Of Modern College Football... | Pat McAfee Reacts",
+                    "value": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/video-count": {
+      "get": {
+        "summary": "Get video counts",
+        "description": "Retrieve filtered and original video counts based on date range, keywords, and other parameters.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date for the data range (YYYY-MM-DD)"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keywords to filter the videos"
+          },
+          {
+            "name": "requireAll",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "description": "Whether to require all keywords"
+          },
+          {
+            "name": "dataTag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data tag for filtering"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "filteredCount": {
+                      "type": "integer"
+                    },
+                    "originalCount": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "example": {
+                  "filteredCount": 654,
+                  "originalCount": 1035
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
     }
+  },
+  "components": {
+    "securitySchemes": {
+      "TokenBearerHeader": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "TokenQueryString": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "token"
+      }
+    },
+    "responses": {
+      "BadRequestError": {
+        "description": "Invalid or malformed user input: check your SQL, parameters, and encoding"
+      },
+      "UnauthorizedError": {
+        "description": "Unauthorized request"
+      },
+      "ForbiddenError": {
+        "description": "Access token is missing or invalid: the request does not have enough permissions to be completed"
+      },
+      "NotFoundError": {
+        "description": "Resource not found: the data source, pipe, or endpoint is missing"
+      },
+      "MethodNotAllowedError": {
+        "description": "The method is not allowed in this resource"
+      },
+      "InternalServerError": {
+        "description": "Server could not fulfill the request due to an internal problem: contact support@tinybird.co"
+      }
+    },
+    "schemas": {
+      "ApiQueryJSONResponseMetaItem": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiQueryJSONResponseStatistics": {
+        "type": "object",
+        "properties": {
+          "elapsed": {
+            "type": "number"
+          },
+          "rows_read": {
+            "type": "number"
+          },
+          "bytes_read": {
+            "type": "number"
+          }
+        }
+      },
+      "ApiQueryJSONResponseDataItem": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "ApiQueryJSONResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem"
+            }
+          },
+          "rows": {
+            "type": "number"
+          },
+          "rows_before_limit_at_least": {
+            "type": "number"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+          }
+        },
+        "required": ["meta", "data", "rows", "statistics"]
+      },
+      "ApiQueryCSVResponse": {
+        "type": "string",
+        "format": "csv"
+      },
+      "ApiQueryJSONResponseDataItem__video_matches": {
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiQueryJSONResponse__video_matches": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__video_matches"
+            }
+          },
+          "rows": {
+            "type": "number"
+          },
+          "rows_before_limit_at_least": {
+            "type": "number"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+          }
+        },
+        "required": ["meta", "data", "rows", "statistics"]
+      },
+      "ApiQueryJSONResponseDataItem__all_statistics": {
+        "type": "object",
+        "properties": {
+          "replies": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "likes": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "mentions": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sentiment": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ApiQueryJSONResponse__all_statistics": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics"
+            }
+          },
+          "rows": {
+            "type": "number"
+          },
+          "rows_before_limit_at_least": {
+            "type": "number"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+          }
+        },
+        "required": ["meta", "data", "rows", "statistics"]
+      },
+      "ApiQueryJSONResponseDataItem__all_statistics_per_day_of_week": {
+        "type": "object",
+        "properties": {
+          "day_of_week": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "likes": {
+            "type": "number",
+            "format": "double"
+          },
+          "sentiment": {
+            "type": "number",
+            "format": "double"
+          },
+          "mentions": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "replies": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ApiQueryJSONResponse__all_statistics_per_day_of_week": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics_per_day_of_week"
+            }
+          },
+          "rows": {
+            "type": "number"
+          },
+          "rows_before_limit_at_least": {
+            "type": "number"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+          }
+        },
+        "required": ["meta", "data", "rows", "statistics"]
+      },
+      "ApiQueryJSONResponseDataItem__all_statistics_daily": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "sentiment": {
+            "type": "number",
+            "format": "double"
+          },
+          "replies": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "likes": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "mentions": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ApiQueryJSONResponse__all_statistics_daily": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics_daily"
+            }
+          },
+          "rows": {
+            "type": "number"
+          },
+          "rows_before_limit_at_least": {
+            "type": "number"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+          }
+        },
+        "required": ["meta", "data", "rows", "statistics"]
+      },
+      "ApiQueryJSONResponseDataItem__sample_comments": {
+        "type": "object",
+        "properties": {
+          "data_textOriginal": {
+            "type": "string"
+          },
+          "data_authorChannel_Id_value": {
+            "type": "string"
+          },
+          "data_authorProfileImageUrl": {
+            "type": "string"
+          },
+          "data_likeCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numReplies": {
+            "type": "integer",
+            "format": "int16"
+          },
+          "ai_sentiment_mock": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "ApiQueryJSONResponse__sample_comments": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__sample_comments"
+            }
+          },
+          "rows": {
+            "type": "number"
+          },
+          "rows_before_limit_at_least": {
+            "type": "number"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+          }
+        },
+        "required": ["meta", "data", "rows", "statistics"]
+      }
+    }
   }
-  
+}

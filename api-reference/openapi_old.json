@@ -1,0 +1,1497 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "dev-pipes-token",
+      "termsOfService": "https://ui.us-east.tinybird.co/terms",
+      "contact": {
+        "email": "support@tinybird.co"
+      }
+    },
+    "servers": [
+      {
+        "url": "https://api.us-east.tinybird.co/v0"
+      }
+    ],
+    "externalDocs": {
+      "description": "Tinybird Analytics documentation",
+      "url": "https://docs.tinybird.co"
+    },
+    "security": [
+      {
+        "TokenBearerHeader": [
+          ""
+        ]
+      },
+      {
+        "TokenQueryString": [
+          ""
+        ]
+      }
+    ],
+    "paths": {
+      "/pipes/video_matches.{format}": {
+        "get": {
+          "tags": ["Pipes"],
+          "summary": "video_matches",
+          "description": "",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "typeStr",
+              "description": "",
+              "required": false,
+              "example": null,
+              "schema": {
+                "type": "string",
+                "default": "mentions"
+              }
+            },
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:video_matches", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:video_matches", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__video_matches"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "videoId",
+                        "type": "String"
+                      },
+                      {
+                        "name": "error",
+                        "type": "String"
+                      },
+                      {
+                        "name": "title",
+                        "type": "String"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "videoId": "fSRH40d6sX",
+                        "error": "b'",
+                        "title": "(U]p'l`"
+                      },
+                      {
+                        "videoId": "",
+                        "error": "6xGwg|(&Q",
+                        "title": "U6"
+                      },
+                      {
+                        "videoId": "=@ep]Vw~",
+                        "error": "^ipx|,=a5N",
+                        "title": "'%Y~t9"
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000821749,
+                      "rows_read": 3,
+                      "bytes_read": 135
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "\"fSRH40d6sX\",\"b'\",\"(U]p'l`\"\n\"\",\"6xGwg|(&Q\",\"U6\"\n\"=@ep]Vw~\",\"^ipx|,=a5N\",\"'%Y~t9\"\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "video_matches_get"
+        }
+      },
+      "/pipes/all_statistics.{format}": {
+        "get": {
+          "tags": ["Pipes"],
+          "summary": "all_statistics",
+          "description": "",
+          "parameters": [
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:all_statistics", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:all_statistics", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "replies",
+                        "type": "Int64"
+                      },
+                      {
+                        "name": "likes",
+                        "type": "Int64"
+                      },
+                      {
+                        "name": "mentions",
+                        "type": "UInt64"
+                      },
+                      {
+                        "name": "sentiment",
+                        "type": "Float64"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "replies": 2804162938822577320,
+                        "likes": 5935810273536892891,
+                        "mentions": 15657812979985370729,
+                        "sentiment": -3.014080971435583e-286
+                      },
+                      {
+                        "replies": 7885388429666205427,
+                        "likes": 368066018677693974,
+                        "mentions": 18371568619324220532,
+                        "sentiment": null
+                      },
+                      {
+                        "replies": 4357435422797280898,
+                        "likes": 8124171311239967992,
+                        "mentions": 821735343441964030,
+                        "sentiment": -2.6774132404843463e217
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000787558,
+                      "rows_read": 3,
+                      "bytes_read": 96
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "2804162938822577320,5935810273536892891,15657812979985370729,-3.014080971435583e-286\n7885388429666205427,368066018677693974,18371568619324220532,nan\n4357435422797280898,8124171311239967992,821735343441964030,-2.6774132404843463e217\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "all_statistics_get"
+        }
+      },
+      "/pipes/all_statistics_per_day_of_week.{format}": {
+        "get": {
+          "tags": ["Pipes"],
+          "summary": "all_statistics_per_day_of_week",
+          "description": "",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "typeStr",
+              "description": "",
+              "required": false,
+              "example": null,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": [
+                "PIPES:READ:all_statistics_per_day_of_week",
+                "ADMIN"
+              ]
+            },
+            {
+              "TokenQueryString": [
+                "PIPES:READ:all_statistics_per_day_of_week",
+                "ADMIN"
+              ]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_per_day_of_week"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "day_of_week",
+                        "type": "UInt8"
+                      },
+                      {
+                        "name": "likes",
+                        "type": "Float64"
+                      },
+                      {
+                        "name": "sentiment",
+                        "type": "Float64"
+                      },
+                      {
+                        "name": "mentions",
+                        "type": "UInt64"
+                      },
+                      {
+                        "name": "replies",
+                        "type": "Int64"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "day_of_week": 168,
+                        "likes": 1.3470253913849581e219,
+                        "sentiment": 4.645740593187226e-284,
+                        "mentions": 18371568619324220532,
+                        "replies": -2776833771540858
+                      },
+                      {
+                        "day_of_week": 204,
+                        "likes": 2.144155604953677e-17,
+                        "sentiment": 1.2262973812461839e235,
+                        "mentions": 821735343441964030,
+                        "replies": -1363628932535403038
+                      },
+                      {
+                        "day_of_week": 213,
+                        "likes": 6.458977002410942e88,
+                        "sentiment": -1.4319274895836525e122,
+                        "mentions": 9558594037060121162,
+                        "replies": 1355609803008819271
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000731915,
+                      "rows_read": 3,
+                      "bytes_read": 99
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "168,1.3470253913849581e219,4.645740593187226e-284,18371568619324220532,-2776833771540858\n204,2.144155604953677e-17,1.2262973812461839e235,821735343441964030,-1363628932535403038\n213,6.458977002410942e88,-1.4319274895836525e122,9558594037060121162,1355609803008819271\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "all_statistics_per_day_of_week_get"
+        }
+      },
+      "/pipes/all_statistics_daily.{format}": {
+        "get": {
+          "tags": ["Pipes"],
+          "summary": "all_statistics_daily",
+          "description": "",
+          "parameters": [
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:all_statistics_daily", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:all_statistics_daily", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_daily"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "date",
+                        "type": "Date"
+                      },
+                      {
+                        "name": "likes",
+                        "type": "Float64"
+                      },
+                      {
+                        "name": "sentiment",
+                        "type": "Float64"
+                      },
+                      {
+                        "name": "mentions",
+                        "type": "UInt64"
+                      },
+                      {
+                        "name": "replies",
+                        "type": "Int64"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "day_of_week": 168,
+                        "likes": 1.3470253913849581e219,
+                        "sentiment": 4.645740593187226e-284,
+                        "mentions": 18371568619324220532,
+                        "replies": -2776833771540858
+                      },
+                      {
+                        "day_of_week": 204,
+                        "likes": 2.144155604953677e-17,
+                        "sentiment": 1.2262973812461839e235,
+                        "mentions": 821735343441964030,
+                        "replies": -1363628932535403038
+                      },
+                      {
+                        "day_of_week": 213,
+                        "likes": 6.458977002410942e88,
+                        "sentiment": -1.4319274895836525e122,
+                        "mentions": 9558594037060121162,
+                        "replies": 1355609803008819271
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000731915,
+                      "rows_read": 3,
+                      "bytes_read": 99
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "168,1.3470253913849581e219,4.645740593187226e-284,18371568619324220532,-2776833771540858\n204,2.144155604953677e-17,1.2262973812461839e235,821735343441964030,-1363628932535403038\n213,6.458977002410942e88,-1.4319274895836525e122,9558594037060121162,1355609803008819271\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "all_statistics_per_day_of_week_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "typeStr": {
+                      "type": "string",
+                      "description": ""
+                    }
+                  }
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "typeStr": {
+                      "type": "string",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/pipes/all_statistics_daily.{format}": {
+        "get": {
+          "tags": ["Pipes"],
+          "summary": "all_statistics_daily",
+          "description": "",
+          "parameters": [
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:all_statistics_daily", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:all_statistics_daily", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_daily"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "date",
+                        "type": "Date"
+                      },
+                      {
+                        "name": "sentiment",
+                        "type": "Float64"
+                      },
+                      {
+                        "name": "replies",
+                        "type": "Int64"
+                      },
+                      {
+                        "name": "likes",
+                        "type": "Int64"
+                      },
+                      {
+                        "name": "mentions",
+                        "type": "UInt64"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "date": "2113-06-12",
+                        "sentiment": 1.3470253913849581e219,
+                        "replies": 368066018677693974,
+                        "likes": -75175454385331084,
+                        "mentions": 18443967239938010758
+                      },
+                      {
+                        "date": "2141-08-09",
+                        "sentiment": 2.144155604953677e-17,
+                        "replies": 8124171311239967992,
+                        "likes": 821735343441964030,
+                        "mentions": 17083115141174148578
+                      },
+                      {
+                        "date": "2039-08-16",
+                        "sentiment": 6.458977002410942e88,
+                        "replies": -2788931093724180887,
+                        "likes": -8888150036649430454,
+                        "mentions": 1355609803008819271
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000665388,
+                      "rows_read": 3,
+                      "bytes_read": 102
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "\"2113-06-12\",1.3470253913849581e219,368066018677693974,-75175454385331084,18443967239938010758\n\"2141-08-09\",2.144155604953677e-17,8124171311239967992,821735343441964030,17083115141174148578\n\"2039-08-16\",6.458977002410942e88,-2788931093724180887,-8888150036649430454,1355609803008819271\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "all_statistics_daily_get"
+        },
+        "post": {
+          "tags": ["Pipes"],
+          "summary": "all_statistics_daily",
+          "description": "",
+          "parameters": [
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:all_statistics_daily", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:all_statistics_daily", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__all_statistics_daily"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "date",
+                        "type": "Date"
+                      },
+                      {
+                        "name": "sentiment",
+                        "type": "Float64"
+                      },
+                      {
+                        "name": "replies",
+                        "type": "Int64"
+                      },
+                      {
+                        "name": "likes",
+                        "type": "Int64"
+                      },
+                      {
+                        "name": "mentions",
+                        "type": "UInt64"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "date": "2113-06-12",
+                        "sentiment": 1.3470253913849581e219,
+                        "replies": 368066018677693974,
+                        "likes": -75175454385331084,
+                        "mentions": 18443967239938010758
+                      },
+                      {
+                        "date": "2141-08-09",
+                        "sentiment": 2.144155604953677e-17,
+                        "replies": 8124171311239967992,
+                        "likes": 821735343441964030,
+                        "mentions": 17083115141174148578
+                      },
+                      {
+                        "date": "2039-08-16",
+                        "sentiment": 6.458977002410942e88,
+                        "replies": -2788931093724180887,
+                        "likes": -8888150036649430454,
+                        "mentions": 1355609803008819271
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000665388,
+                      "rows_read": 3,
+                      "bytes_read": 102
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "\"2113-06-12\",1.3470253913849581e219,368066018677693974,-75175454385331084,18443967239938010758\n\"2141-08-09\",2.144155604953677e-17,8124171311239967992,821735343441964030,17083115141174148578\n\"2039-08-16\",6.458977002410942e88,-2788931093724180887,-8888150036649430454,1355609803008819271\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "all_statistics_daily_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "/pipes/sample_comments.{format}": {
+        "get": {
+          "tags": ["Pipes"],
+          "summary": "sample_comments",
+          "description": "",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "typeStr",
+              "description": "",
+              "required": false,
+              "example": null,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:sample_comments", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:sample_comments", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__sample_comments"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "data_textOriginal",
+                        "type": "String"
+                      },
+                      {
+                        "name": "data_authorChannel_Id_value",
+                        "type": "String"
+                      },
+                      {
+                        "name": "data_authorProfileImageUrl",
+                        "type": "String"
+                      },
+                      {
+                        "name": "data_likeCount",
+                        "type": "Int32"
+                      },
+                      {
+                        "name": "numReplies",
+                        "type": "Int16"
+                      },
+                      {
+                        "name": "ai_sentiment_mock",
+                        "type": "Float32"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "data_textOriginal": "fSRH40d6sX",
+                        "data_authorChannel_Id_value": "b'",
+                        "data_authorProfileImageUrl": "(U]p'l`",
+                        "data_likeCount": -852056475,
+                        "numReplies": -26460,
+                        "ai_sentiment_mock": -12512000
+                      },
+                      {
+                        "data_textOriginal": "",
+                        "data_authorChannel_Id_value": "6xGwg|(&Q",
+                        "data_authorProfileImageUrl": "U6",
+                        "data_likeCount": -80126721,
+                        "numReplies": -7639,
+                        "ai_sentiment_mock": 4.607553e31
+                      },
+                      {
+                        "data_textOriginal": "=@ep]Vw~",
+                        "data_authorChannel_Id_value": "^ipx|,=a5N",
+                        "data_authorProfileImageUrl": "'%Y~t9",
+                        "data_likeCount": 2026080544,
+                        "numReplies": -23692,
+                        "ai_sentiment_mock": -2110969800000000000
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000810835,
+                      "rows_read": 3,
+                      "bytes_read": 165
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "\"fSRH40d6sX\",\"b'\",\"(U]p'l`\",-852056475,-26460,-12512000\n\"\",\"6xGwg|(&Q\",\"U6\",-80126721,-7639,4.607553e31\n\"=@ep]Vw~\",\"^ipx|,=a5N\",\"'%Y~t9\",2026080544,-23692,-2110969800000000000\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "sample_comments_get"
+        },
+        "post": {
+          "tags": ["Pipes"],
+          "summary": "sample_comments",
+          "description": "",
+          "parameters": [
+            {
+              "name": "format",
+              "required": true,
+              "in": "path",
+              "description": "Response format: `json` or `csv`",
+              "schema": {
+                "type": "string",
+                "default": "json",
+                "enum": ["json", "csv"]
+              }
+            },
+            {
+              "name": "q",
+              "required": false,
+              "in": "query",
+              "description": "SQL statement to run a query against the data returned by the endpoint (e.g SELECT count() FROM _)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "TokenBearerHeader": ["PIPES:READ:sample_comments", "ADMIN"]
+            },
+            {
+              "TokenQueryString": ["PIPES:READ:sample_comments", "ADMIN"]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Endpoint result",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryJSONResponse__sample_comments"
+                  },
+                  "example": {
+                    "meta": [
+                      {
+                        "name": "data_textOriginal",
+                        "type": "String"
+                      },
+                      {
+                        "name": "data_authorChannel_Id_value",
+                        "type": "String"
+                      },
+                      {
+                        "name": "data_authorProfileImageUrl",
+                        "type": "String"
+                      },
+                      {
+                        "name": "data_likeCount",
+                        "type": "Int32"
+                      },
+                      {
+                        "name": "numReplies",
+                        "type": "Int16"
+                      },
+                      {
+                        "name": "ai_sentiment_mock",
+                        "type": "Float32"
+                      }
+                    ],
+                    "data": [
+                      {
+                        "data_textOriginal": "fSRH40d6sX",
+                        "data_authorChannel_Id_value": "b'",
+                        "data_authorProfileImageUrl": "(U]p'l`",
+                        "data_likeCount": -852056475,
+                        "numReplies": -26460,
+                        "ai_sentiment_mock": -12512000
+                      },
+                      {
+                        "data_textOriginal": "",
+                        "data_authorChannel_Id_value": "6xGwg|(&Q",
+                        "data_authorProfileImageUrl": "U6",
+                        "data_likeCount": -80126721,
+                        "numReplies": -7639,
+                        "ai_sentiment_mock": 4.607553e31
+                      },
+                      {
+                        "data_textOriginal": "=@ep]Vw~",
+                        "data_authorChannel_Id_value": "^ipx|,=a5N",
+                        "data_authorProfileImageUrl": "'%Y~t9",
+                        "data_likeCount": 2026080544,
+                        "numReplies": -23692,
+                        "ai_sentiment_mock": -2110969800000000000
+                      }
+                    ],
+                    "rows": 3,
+                    "rows_before_limit_at_least": 3,
+                    "statistics": {
+                      "elapsed": 0.000810835,
+                      "rows_read": 3,
+                      "bytes_read": 165
+                    }
+                  }
+                },
+                "text/csv": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiQueryCSVResponse"
+                  },
+                  "example": "\"fSRH40d6sX\",\"b'\",\"(U]p'l`\",-852056475,-26460,-12512000\n\"\",\"6xGwg|(&Q\",\"U6\",-80126721,-7639,4.607553e31\n\"=@ep]Vw~\",\"^ipx|,=a5N\",\"'%Y~t9\",2026080544,-23692,-2110969800000000000\n"
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "403": {
+              "$ref": "#/components/responses/ForbiddenError"
+            },
+            "404": {
+              "$ref": "#/components/responses/NotFoundError"
+            },
+            "405": {
+              "$ref": "#/components/responses/MethodNotAllowedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          },
+          "operationId": "sample_comments_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "typeStr": {
+                      "type": "string",
+                      "description": ""
+                    }
+                  }
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "typeStr": {
+                      "type": "string",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "TokenBearerHeader": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        },
+        "TokenQueryString": {
+          "type": "apiKey",
+          "in": "query",
+          "name": "token"
+        }
+      },
+      "responses": {
+        "BadRequestError": {
+          "description": "Invalid or malformed user input: check your SQL, parameters, and encoding"
+        },
+        "UnauthorizedError": {
+          "description": "Unauthorized request"
+        },
+        "ForbiddenError": {
+          "description": "Access token is missing or invalid: the request does not have enough permissions to be completed"
+        },
+        "NotFoundError": {
+          "description": "Resource not found: the data source, pipe, or endpoint is missing"
+        },
+        "MethodNotAllowedError": {
+          "description": "The method is not allowed in this resource"
+        },
+        "InternalServerError": {
+          "description": "Server could not fulfill the request due to an internal problem: contact support@tinybird.co"
+        }
+      },
+      "schemas": {
+        "ApiQueryJSONResponseMetaItem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          }
+        },
+        "ApiQueryJSONResponseStatistics": {
+          "type": "object",
+          "properties": {
+            "elapsed": {
+              "type": "number"
+            },
+            "rows_read": {
+              "type": "number"
+            },
+            "bytes_read": {
+              "type": "number"
+            }
+          }
+        },
+        "ApiQueryJSONResponseDataItem": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ApiQueryJSONResponse": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem"
+              }
+            },
+            "rows": {
+              "type": "number"
+            },
+            "rows_before_limit_at_least": {
+              "type": "number"
+            },
+            "statistics": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+            }
+          },
+          "required": ["meta", "data", "rows", "statistics"]
+        },
+        "ApiQueryCSVResponse": {
+          "type": "string",
+          "format": "csv"
+        },
+        "ApiQueryJSONResponseDataItem__video_matches": {
+          "type": "object",
+          "properties": {
+            "videoId": {
+              "type": "string"
+            },
+            "error": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          }
+        },
+        "ApiQueryJSONResponse__video_matches": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__video_matches"
+              }
+            },
+            "rows": {
+              "type": "number"
+            },
+            "rows_before_limit_at_least": {
+              "type": "number"
+            },
+            "statistics": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+            }
+          },
+          "required": ["meta", "data", "rows", "statistics"]
+        },
+        "ApiQueryJSONResponseDataItem__all_statistics": {
+          "type": "object",
+          "properties": {
+            "replies": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "likes": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "mentions": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "sentiment": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "ApiQueryJSONResponse__all_statistics": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics"
+              }
+            },
+            "rows": {
+              "type": "number"
+            },
+            "rows_before_limit_at_least": {
+              "type": "number"
+            },
+            "statistics": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+            }
+          },
+          "required": ["meta", "data", "rows", "statistics"]
+        },
+        "ApiQueryJSONResponseDataItem__all_statistics_per_day_of_week": {
+          "type": "object",
+          "properties": {
+            "day_of_week": {
+              "type": "integer",
+              "format": "uint8"
+            },
+            "likes": {
+              "type": "number",
+              "format": "double"
+            },
+            "sentiment": {
+              "type": "number",
+              "format": "double"
+            },
+            "mentions": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "replies": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "ApiQueryJSONResponse__all_statistics_per_day_of_week": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics_per_day_of_week"
+              }
+            },
+            "rows": {
+              "type": "number"
+            },
+            "rows_before_limit_at_least": {
+              "type": "number"
+            },
+            "statistics": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+            }
+          },
+          "required": ["meta", "data", "rows", "statistics"]
+        },
+        "ApiQueryJSONResponseDataItem__all_statistics_daily": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "sentiment": {
+              "type": "number",
+              "format": "double"
+            },
+            "replies": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "likes": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "mentions": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "ApiQueryJSONResponse__all_statistics_daily": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__all_statistics_daily"
+              }
+            },
+            "rows": {
+              "type": "number"
+            },
+            "rows_before_limit_at_least": {
+              "type": "number"
+            },
+            "statistics": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+            }
+          },
+          "required": ["meta", "data", "rows", "statistics"]
+        },
+        "ApiQueryJSONResponseDataItem__sample_comments": {
+          "type": "object",
+          "properties": {
+            "data_textOriginal": {
+              "type": "string"
+            },
+            "data_authorChannel_Id_value": {
+              "type": "string"
+            },
+            "data_authorProfileImageUrl": {
+              "type": "string"
+            },
+            "data_likeCount": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "numReplies": {
+              "type": "integer",
+              "format": "int16"
+            },
+            "ai_sentiment_mock": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        "ApiQueryJSONResponse__sample_comments": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseMetaItem"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ApiQueryJSONResponseDataItem__sample_comments"
+              }
+            },
+            "rows": {
+              "type": "number"
+            },
+            "rows_before_limit_at_least": {
+              "type": "number"
+            },
+            "statistics": {
+              "$ref": "#/components/schemas/ApiQueryJSONResponseStatistics"
+            }
+          },
+          "required": ["meta", "data", "rows", "statistics"]
+        }
+      }
+    }
+  }
+  
