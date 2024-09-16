@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://super.fans/api/v1"
+      "url": "https://super.fans"
     }
   ],
   "security": [
