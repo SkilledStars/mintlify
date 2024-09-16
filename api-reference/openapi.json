@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://api.super.fans/api/v1"
+      "url": "https://super.fans/api/v1"
     }
   ],
   "security": [
@@ -1495,15 +1495,9 @@
   },
   "components": {
     "securitySchemes": {
-      "TokenBearerHeader": {
+      "BearerAuth": {
         "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      },
-      "TokenQueryString": {
-        "type": "apiKey",
-        "in": "query",
-        "name": "token"
+        "scheme": "bearer"
       }
     },
     "responses": {
