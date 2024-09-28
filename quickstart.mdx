@@ -5,41 +5,35 @@ description: 'Get started consuming data from super.fans API'
 
 ## Generating your API Key
 
-You can generate an API key through your super.fans <a href="https://super.fans/dashboard/developers">developer portal</a>.  All requests to the super.fans API must include an authorization header with your API key as the bearer token.
+You can generate an API key through your super.fans developer portal.  All requests to the super.fans API must include an authorization header with your API key as the bearer token.
 
 <CodeGroup>
 
 ```bash curl
-curl --compressed -H 'Authorization: Bearer <JWT_TOKEN>'  https://super.fans/api/v1/pipes/total_likes.json
+curl -X GET 'https://super.fans/api/v1/popular-keywords?dataTag=YOUR_DATATAG' \
+  -H 'Authorization: Bearer YOUR_KEY'
 ```
 
 ```javascript fetch
-let url = new URL(`https://api.us-east.tinybird.co/v0/pipes/total_likes.json`)
+const options = {
+  method: 'GET',
+  headers: {Authorization: 'Bearer YOUR_KEY'}
+};
 
-
-const result = await fetch(url, {
-  headers: {
-    Authorization: 'Bearer <JWT_TOKEN>'
-  }
-}) 
-  .then(r => r.json())
-  .then(r => r)
-  .catch(e => e.toString())
-
-if (!result.data) {
-  console.error(`there is a problem running the query: ${result}`);
-} else {
-  console.table(result.data)
-  console.log("** Query columns **")
-  for (let column of result.meta) {
-    console.log(`${column.name} -> ${column.type}`)
-  }
-}
+fetch('https://super.fans/api/v1/popular-keywords?dataTag=YOUR_DATATAG', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
 ```
 </CodeGroup>
 
 ## Making Requests
 Most fields will require setting the following fields:
+<ResponseField name="dataTag" type="Array(string)" required>
+The dataset you want to analyze.  Your available dataset slugs can be found on your developer dashboard 
+
+Example: `demo_tag`
+</ResponseField>
 <ResponseField name="keywords" type="Array(string)" required>
 The keywords you want to filter by
 
@@ -61,12 +55,10 @@ Example: `1/30/2024`
 
 Each request will contain various other fields depending on the request type and type of filtering.  To see a full list of endpoints available, checkout the <a href="https://docs.super.fans/api-reference">api reference</a>.
 
-## Response format and Error Codes
-TODO
-
 ## Limitations
-1. 100k requests per month
-2. Rate Limit of 10 requests/s
+3,500 requests per day (<a href="mailto:support@super.fans">contact us</a> to increase)
 
 ## Questions?
 Contact support@super.fans if you have any issues getting setup or would like to customize the endpoints available for additional use cases.
+
+Many additional endpoints and filters will be coming soon.
