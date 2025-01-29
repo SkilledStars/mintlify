@@ -1513,7 +1513,7 @@
               "type": "integer",
               "default": 100
             },
-            "description": "Maximum number of results to return (Max 5000)"
+            "description": "Maximum number of results to return (Max 1000)"
           },
           {
             "name": "offset",
