@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.0", 
     "title": "super.fans enterprise API",
     "termsOfService": "https://super.fans",
     "contact": {
@@ -19,310 +19,86 @@
     }
   ],
   "paths": {
-    "/api/v1/ad-affinities": {
+    "/api/v1/marketing-results": {
       "get": {
-        "summary": "Retrieve categorized ad affinities",
-        "description": "Returns the top ad affinities categorized into three levels based on the provided parameters.",
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
+        "summary": "Get marketing results data",
+        "description": "Retrieves categorized marketing data based on the specified target field",
         "parameters": [
           {
             "name": "dataTag",
             "in": "query",
-            "description": "The data tag to filter results",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The data tag to filter results (marketing tag)"
           },
           {
-            "name": "startDate",
+            "name": "target_field",
             "in": "query",
-            "description": "Start date for filtering data (YYYY-MM-DD), defaults to 1950-01-01",
+            "required": true,
             "schema": {
               "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "End date for filtering data (YYYY-MM-DD), defaults to today's date",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
+              "enum": [
+                "adAffinities",
+                "adTopics",
+                "adInMarketAffinities",
+                "keywords"
+              ]
+            },
+            "description": "The type of marketing data to retrieve"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved categories",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "categories": {
-                      "type": "object",
-                      "properties": {
-                        "category1": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": { "type": "string" },
-                              "percent": { "type": "string" }
-                            }
-                          }
-                        },
-                        "category2": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": { "type": "string" },
-                              "percent": { "type": "string" }
-                            }
-                          }
-                        },
-                        "category3": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": { "type": "string" },
-                              "percent": { "type": "string" }
-                            }
-                          }
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "target_name": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "occurrence_count": {
+                        "type": "integer"
+                      },
+                      "weighted_relevance": {
+                        "type": "number"
+                      },
+                      "avg_exclusion_score": {
+                        "type": "number"
+                      },
+                      "all_defenses": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
                         }
                       }
                     }
                   }
                 },
                 "examples": {
-                  "validResponse": {
-                    "value": {
-                      "categories": {
-                        "category1": [
-                          {
-                            "name": "Sports & Fitness",
-                            "percent": "41.98"
-                          },
-                          {
-                            "name": "Media & Entertainment",
-                            "percent": "41.06"
-                          },
-                          {
-                            "name": "Lifestyles & Hobbies",
-                            "percent": "12.24"
-                          }
-                        ],
-                        "category2": [
-                          {
-                            "name": "Sports Fans",
-                            "percent": "36.99"
-                          },
-                          {
-                            "name": "TV Lovers",
-                            "percent": "27.75"
-                          },
-                          {
-                            "name": "Outdoor Enthusiasts",
-                            "percent": "9.17"
-                          }
-                        ],
-                        "category3": [
-                          {
-                            "name": "American Football Fans",
-                            "percent": "27.27"
-                          },
-                          {
-                            "name": "Sports Fans",
-                            "percent": "16.31"
-                          },
-                          {
-                            "name": "Sports Game Fans",
-                            "percent": "9.30"
-                          }
+                  "Sample Output": {
+                    "value": [
+                      {
+                        "target_name": "food & dining>fast food cravers",
+                        "id": "92900",
+                        "occurrence_count": 7,
+                        "weighted_relevance": 9.285714285714286,
+                        "avg_exclusion_score": 0.41582344259534565,
+                        "all_defenses": [
+                          "This affinity targets individuals who enjoy fast food, aligning with Wendy's target audience.",
+                          "This affinity directly targets Wendy's lovers who frequently consume fast food, making it highly relevant.",
+                          "This affinity directly targets Wendy's core audience, ensuring high relevance for the campaign.",
+                          "This affinity targets fast food lovers, aligning with Wendy's target audience.",
+                          "This affinity directly targets individuals who frequently consume fast food, aligning perfectly with Wendy's target audience."
                         ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "Unauthorized"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "Unkey error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/ad-categories": {
-      "get": {
-        "summary": "Get ad categories statistics",
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "dataTag",
-            "in": "query",
-            "description": "Input tag to filter data",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "Start date in YYYY-MM-DD format",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "End date in YYYY-MM-DD format",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response with ad categories statistics",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "categories": {
-                      "type": "object",
-                      "properties": {
-                        "category1": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "Name of the category"
-                              },
-                              "percent": {
-                                "type": "string",
-                                "description": "Percentage represented as a string with two decimal places"
-                              }
-                            }
-                          }
-                        },
-                        "category2": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "Name of the category"
-                              },
-                              "percent": {
-                                "type": "string",
-                                "description": "Percentage represented as a string with two decimal places"
-                              }
-                            }
-                          }
-                        },
-                        "category3": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "Name of the category"
-                              },
-                              "percent": {
-                                "type": "string",
-                                "description": "Percentage represented as a string with two decimal places"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "categories": {
-                    "category1": [
-                      {
-                        "name": "Sports",
-                        "percent": "51.91"
-                      },
-                      {
-                        "name": "Arts & Entertainment",
-                        "percent": "19.24"
-                      },
-                      {
-                        "name": "News",
-                        "percent": "13.35"
-                      }
-                    ],
-                    "category2": [
-                      {
-                        "name": "Team Sports",
-                        "percent": "17.53"
-                      },
-                      {
-                        "name": "TV & Video",
-                        "percent": "15.31"
-                      },
-                      {
-                        "name": "Sports News",
-                        "percent": "15.19"
-                      }
-                    ],
-                    "category3": [
-                      {
-                        "name": "American Football",
-                        "percent": "28.92"
-                      },
-                      {
-                        "name": "TV Shows & Programs",
-                        "percent": "15.70"
-                      },
-                      {
-                        "name": "American Football Fans",
-                        "percent": "10.20"
                       }
                     ]
                   }
@@ -331,174 +107,10 @@
             }
           },
           "401": {
-            "description": "Unauthorized request"
+            "description": "Unauthorized"
           },
           "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/api/v1/ad-in-market-affinities": {
-      "get": {
-        "summary": "Get ad in-market affinities",
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "dataTag",
-            "in": "query",
-            "description": "Input data tag",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "Start date in YYYY-MM-DD format",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "End date in YYYY-MM-DD format",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response with categories data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "categories": {
-                      "type": "object",
-                      "properties": {
-                        "category1": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "Category name"
-                              },
-                              "percent": {
-                                "type": "string",
-                                "description": "Percentage representation of the category"
-                              }
-                            }
-                          }
-                        },
-                        "category2": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "Category name"
-                              },
-                              "percent": {
-                                "type": "string",
-                                "description": "Percentage representation of the category"
-                              }
-                            }
-                          }
-                        },
-                        "category3": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "description": "Category name"
-                              },
-                              "percent": {
-                                "type": "string",
-                                "description": "Percentage representation of the category"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Sample Output": {
-                    "value": {
-                      "categories": {
-                        "category1": [
-                          {
-                            "name": "Sports",
-                            "percent": "30.08"
-                          },
-                          {
-                            "name": "Travel",
-                            "percent": "22.54"
-                          },
-                          {
-                            "name": "Sports & Fitness",
-                            "percent": "20.40"
-                          }
-                        ],
-                        "category2": [
-                          {
-                            "name": "Travel Buffs",
-                            "percent": "19.26"
-                          },
-                          {
-                            "name": "Sporting Goods",
-                            "percent": "16.24"
-                          },
-                          {
-                            "name": "Sports Fans",
-                            "percent": "13.52"
-                          }
-                        ],
-                        "category3": [
-                          {
-                            "name": "American Football Fans",
-                            "percent": "8.15"
-                          },
-                          {
-                            "name": "Family Vacationers",
-                            "percent": "7.76"
-                          },
-                          {
-                            "name": "American Football Equipment",
-                            "percent": "7.46"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized access"
-          },
-          "500": {
-            "description": "Server error"
+            "description": "Internal Server Error"
           }
         }
       }
@@ -554,7 +166,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Data tag for filtering"
+            "description": "Data tag for filtering (audience tag)"
           }
         ],
         "responses": {
@@ -657,7 +269,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Data tag for filtering"
+            "description": "Data tag for filtering (audience tag)"
           }
         ],
         "responses": {
@@ -773,7 +385,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Data tag for filtering"
+            "description": "Data tag for filtering (audience tag)"
           }
         ],
         "responses": {
@@ -868,7 +480,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Data tag for filtering"
+            "description": "Data tag for filtering (audience tag)"
           }
         ],
         "responses": {
