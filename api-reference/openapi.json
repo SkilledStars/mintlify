@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://fandom-api-preview.vercel.app/api/v1"
+      "url": "https://fandom-beta-staging.vercel.app/api/v1"
     },
     {
       "url": "https://www.fandom.ai/api/v1"

@@ -24,7 +24,7 @@
     "primary": {
       "type": "button",
       "label": "Get an API key",
-      "href": "https://fandom-api-preview.vercel.app/api-keys"
+      "href": "https://fandom-beta-staging.vercel.app/api-keys"
     }
   },
   "navigation": {
