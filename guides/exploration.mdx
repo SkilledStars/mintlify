@@ -1,0 +1,48 @@
+---
+title: "Explore an audience"
+description: "See which channels an audience also watches, and how they group."
+---
+
+<Info>
+  Audience Exploration is invite-only. Keys need the `exploration:read` scope, and the workspace needs access. Ask Fandom to turn it on.
+</Info>
+
+Maps are built from who actually comments on which YouTube channels. Channels whose commenters overlap are grouped together.
+
+<Steps>
+  <Step title="Find a starting point">
+    ```bash
+    curl "$FANDOM/exploration/search?q=home%20espresso" \
+      -H "Authorization: Bearer $FANDOM_API_KEY"
+    ```
+    You get channels by name, channels whose audiences talk about your words, topics and saved audiences.
+  </Step>
+
+  <Step title="Map it">
+    ```bash
+    curl $FANDOM/exploration/map -H "Authorization: Bearer $FANDOM_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{ "sources": [{ "type": "channel", "channelId": "UCX6OQ3DkcsbYNE6H8uQQuVA" }] }'
+    ```
+    Sources can also be `query` (plain words), `brand` or `audience`. Combine up to eight.
+
+    The result lists up to 110 channels (`size` up to 160) and their `groups`. The `core` group is the audience you asked about. For each group and channel:
+
+    | Field | Meaning |
+    | --- | --- |
+    | `people` | Distinct commenters |
+    | `reach` | Share of the core audience found here |
+    | `concentration` | Share of these people who are in the core audience |
+    | `fanDensity` | How over-represented the core audience is here. 1.3 means 30% more than elsewhere on the map. |
+  </Step>
+
+  <Step title="Look closer at a channel">
+    ```bash
+    curl $FANDOM/exploration/channels/UCX6OQ3DkcsbYNE6H8uQQuVA \
+      -H "Authorization: Bearer $FANDOM_API_KEY"
+    ```
+    What the channel makes, its topics and its latest videos.
+  </Step>
+</Steps>
+
+To turn a map into a campaign, collect the channels you like into a [data store](/guides/campaign), then build an audience from it.

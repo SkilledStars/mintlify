@@ -1,0 +1,102 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Fandom API",
+  "description": "Create YouTube-audience campaigns, audiences, data stores and targeting from your own code or AI apps.",
+  "colors": {
+    "primary": "#E8541E",
+    "light": "#FF8A4C",
+    "dark": "#C2410C"
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://www.fandom.ai"
+  },
+  "favicon": "/favicon.png",
+  "navbar": {
+    "links": [
+      {
+        "label": "Fandom",
+        "href": "https://www.fandom.ai"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get an API key",
+      "href": "https://www.fandom.ai"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "index",
+              "quickstart",
+              "authentication",
+              "errors"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/campaign",
+              "guides/exploration",
+              "mcp"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "openapi": "api-reference/openapi.json"
+      }
+    ]
+  },
+  "api": {
+    "playground": {
+      "display": "interactive"
+    },
+    "examples": {
+      "languages": [
+        "curl",
+        "javascript",
+        "python"
+      ],
+      "defaults": "all"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
+  },
+  "footer": {
+    "links": [
+      {
+        "header": "Fandom",
+        "items": [
+          {
+            "label": "fandom.ai",
+            "href": "https://www.fandom.ai"
+          },
+          {
+            "label": "Privacy",
+            "href": "https://www.fandom.ai/privacy-policy"
+          },
+          {
+            "label": "Terms",
+            "href": "https://www.fandom.ai/terms-of-service"
+          }
+        ]
+      }
+    ]
+  }
+}

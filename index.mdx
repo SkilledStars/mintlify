@@ -1,0 +1,43 @@
+---
+title: "Fandom API"
+sidebarTitle: "Introduction"
+description: "Build YouTube-audience campaigns from your own code or AI apps."
+---
+
+Create campaigns, build audiences from YouTube data, generate targeting and send campaigns to Google Ads. Anything you do through the API shows up in the Fandom app exactly as if you'd done it there.
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Your first call in two minutes.
+  </Card>
+  <Card title="Build a campaign" icon="route" href="/guides/campaign">
+    From a brand to a paused Google Ads campaign.
+  </Card>
+  <Card title="Use it from AI apps" icon="plug" href="/mcp">
+    Claude, ChatGPT, Cursor and other MCP clients.
+  </Card>
+  <Card title="Explore an audience" icon="compass" href="/guides/exploration">
+    The channels an audience also watches.
+  </Card>
+</CardGroup>
+
+## Base URL
+
+```text
+https://www.fandom.ai/api/v1
+```
+
+<Note>
+  **Preview.** Until the next release, this API runs at
+  `https://fandom-api-preview.vercel.app/api/v1`. The **Try it** panel in the
+  API reference calls the preview.
+</Note>
+
+## How it fits together
+
+- A **campaign** belongs to a **brand** and targets one or more **audiences**.
+- An audience is built from **data stores**: YouTube channels and videos, with their comments.
+- Fandom generates **targeting** for each audience: keywords, segments, topics and websites.
+- When it's ready, create the campaign in **Google Ads**. It starts paused.
+
+**Audience Exploration** shows who an audience is on YouTube: the channels they also watch, and how those channels group. It's invite-only for now.

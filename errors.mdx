@@ -1,0 +1,54 @@
+---
+title: "Errors and limits"
+description: "Error format, rate limits and pages."
+---
+
+## Errors
+
+Errors use HTTP status codes and one JSON shape:
+
+```json
+{
+  "error": {
+    "code": "not_found",
+    "message": "Campaign not found.",
+    "requestId": "2c7f6d8e-..."
+  }
+}
+```
+
+Branch on `code`; show `message` to people. Include `requestId` when you contact us.
+
+| Status | `code` | Meaning |
+| --- | --- | --- |
+| 400 | `invalid_request` | Something is missing or wrong. The message says what. |
+| 401 | `unauthorized` | No key, or the key is wrong or revoked. |
+| 402 | `payment_required` | The workspace's plan doesn't include this. |
+| 403 | `forbidden` | The key lacks the scope, or isn't allowed that campaign or account. |
+| 404 | `not_found` | Nothing with that id in this workspace. |
+| 409 | `conflict` | Not possible right now, for example while targeting is generating. |
+| 429 | `rate_limited` | Too many requests. Wait and retry. |
+| 502 | `upstream_error` | Google Ads didn't answer as expected. The message says whether anything changed. |
+| 500 | `internal_error` | Our fault. Retry; if it keeps happening, send us the `requestId`. |
+
+## Rate limits
+
+Each key can make 120 requests a minute. Every response shows where you are:
+
+| Header | Value |
+| --- | --- |
+| `X-RateLimit-Limit` | Requests allowed per minute |
+| `X-RateLimit-Remaining` | Requests left this minute |
+| `X-RateLimit-Reset` | When the minute resets |
+
+A `429` also sends `Retry-After`, in seconds.
+
+## Pages
+
+Lists return up to 25 items, newest first:
+
+```json
+{ "data": [ ... ], "nextCursor": "6524f0c1e4b0a1b2c3d4e5f6" }
+```
+
+Pass `cursor` with the `nextCursor` value to get the next page, and `limit` (1–100) to change the size. `nextCursor` is `null` on the last page.

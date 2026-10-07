@@ -1,0 +1,53 @@
+---
+title: "Use Fandom from AI apps"
+sidebarTitle: "MCP"
+description: "Connect Claude, ChatGPT, Cursor and other MCP clients."
+---
+
+Fandom's MCP server offers the same operations as the API. AI apps can read your workspace, explain it, and make the changes you ask for.
+
+```text
+https://www.fandom.ai/mcp
+```
+
+## Connect
+
+<Tabs>
+  <Tab title="Claude or ChatGPT">
+    1. Add Fandom as a custom connector (MCP server) with the URL above.
+    2. Sign in with your Fandom account.
+    3. A workspace admin approves the app once, in **Settings → API access → Connected apps**. Until then its tools return an error.
+
+    The app acts as you: it can only do what your workspace role allows.
+  </Tab>
+  <Tab title="Claude Code">
+    Use an API key instead of signing in:
+
+    ```bash
+    claude mcp add --transport http fandom https://www.fandom.ai/mcp \
+      --header "Authorization: Bearer $FANDOM_API_KEY"
+    ```
+  </Tab>
+  <Tab title="Cursor and others">
+    Add the server with your API key as a header. In Cursor, `.cursor/mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "fandom": {
+          "url": "https://www.fandom.ai/mcp",
+          "headers": { "Authorization": "Bearer fnd_..." }
+        }
+      }
+    }
+    ```
+
+    The app gets the key's [scopes](/authentication#scopes).
+  </Tab>
+</Tabs>
+
+## Tools
+
+Every API operation is a tool with the same name, for example `create_campaign`, `get_campaign_targeting` or `build_exploration_map`. Tools that change something are marked, so your app asks before it runs them.
+
+Google Ads campaigns are always created paused. Nothing spends until someone turns the campaign on in Google Ads.

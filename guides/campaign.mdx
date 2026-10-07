@@ -1,0 +1,97 @@
+---
+title: "Build a campaign"
+description: "From a brand to a paused Google Ads campaign, in six calls."
+---
+
+Each step uses the result of the one before. Set your key first:
+
+```bash
+export FANDOM_API_KEY=fnd_...
+export FANDOM=https://www.fandom.ai/api/v1
+```
+
+<Steps>
+  <Step title="Create a brand">
+    ```bash
+    curl $FANDOM/brands -H "Authorization: Bearer $FANDOM_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Brickworks",
+        "website": "brickworks.example",
+        "description": "Building toys for kids 6–12"
+      }'
+    ```
+    Keep the `id`. Campaigns made with it inherit the brand's name, website and description.
+  </Step>
+
+  <Step title="Collect YouTube data">
+    A data store collects channels and videos, with their comments.
+
+    ```bash
+    curl $FANDOM/data-stores -H "Authorization: Bearer $FANDOM_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Building toy channels",
+        "sources": [
+          { "url": "https://www.youtube.com/@brickbuilder" },
+          { "url": "https://www.youtube.com/@toyreviewkids", "videosPerChannel": 20 }
+        ]
+      }'
+    ```
+    It starts as `collecting`. Check it with `GET /data-stores/{id}` until `status` is `ready`, usually within minutes.
+  </Step>
+
+  <Step title="Create an audience">
+    ```bash
+    curl $FANDOM/audiences -H "Authorization: Bearer $FANDOM_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Parents of young builders",
+        "description": "Parents buying building sets for kids 6–12",
+        "dataStoreIds": ["DATA_STORE_ID"]
+      }'
+    ```
+  </Step>
+
+  <Step title="Create the campaign">
+    ```bash
+    curl $FANDOM/campaigns -H "Authorization: Bearer $FANDOM_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Brickworks spring",
+        "campaignType": "DEMAND_GEN",
+        "objective": "Sell the spring sets to parents",
+        "brandId": "BRAND_ID",
+        "audienceIds": ["AUDIENCE_ID"],
+        "budget": 50
+      }'
+    ```
+    Attached audiences start generating targeting straight away.
+  </Step>
+
+  <Step title="Review the targeting">
+    ```bash
+    curl $FANDOM/campaigns/CAMPAIGN_ID/targeting -H "Authorization: Bearer $FANDOM_API_KEY"
+    ```
+    Each audience shows `generating`, then `ready` with its terms, usually within 90 seconds. Everything listed goes to Google Ads. To change it, add or remove terms, using the audience's `id` from this response:
+
+    ```bash
+    curl -X PATCH $FANDOM/campaigns/CAMPAIGN_ID/targeting \
+      -H "Authorization: Bearer $FANDOM_API_KEY" -H "Content-Type: application/json" \
+      -d '{
+        "audienceId": "aud-ent-AUDIENCE_ID",
+        "add": [{ "section": "cia", "text": "people shopping for building sets" }],
+        "remove": [{ "section": "adAffinities", "text": "Travel" }]
+      }'
+    ```
+  </Step>
+
+  <Step title="Create it in Google Ads">
+    ```bash
+    curl -X POST $FANDOM/campaigns/CAMPAIGN_ID/google-ads \
+      -H "Authorization: Bearer $FANDOM_API_KEY" -H "Content-Type: application/json" \
+      -d '{ "customerId": "1234567890" }'
+    ```
+    The campaign is created **paused**. Nothing spends until someone turns it on in Google Ads. `GET /google-ads/accounts` lists the accounts you can use.
+  </Step>
+</Steps>

@@ -1,0 +1,45 @@
+---
+title: "Authentication"
+description: "API keys, scopes and safe retries."
+---
+
+Send your API key with every request:
+
+```http
+Authorization: Bearer fnd_...
+```
+
+A key belongs to one workspace and acts as the admin who created it. It stops working when it's revoked in **Settings → API access**, or when that person leaves the workspace.
+
+## Scopes
+
+You choose what a key can do when you create it. A request without the scope it needs gets `403`.
+
+| Scope | Allows |
+| --- | --- |
+| `campaigns:read` | Read campaigns and their targeting |
+| `campaigns:write` | Create, update and delete campaigns; generate and edit targeting |
+| `audiences:read`, `audiences:write` | Read, or create and change, audiences |
+| `datasets:read`, `datasets:write` | Read, or create and change, data stores |
+| `brands:read`, `brands:write` | Read, or create and change, brands |
+| `exploration:read` | Audience Exploration (invite-only) |
+| `google-ads:read` | Google Ads accounts and performance |
+| `google-ads:write` | Create campaigns in Google Ads, always paused |
+
+## Limiting a key
+
+When you create a key you can also limit it to certain Google Ads accounts or campaigns. A key limited to campaigns can't create new ones.
+
+## Safe retries
+
+Add an `Idempotency-Key` header to any write. Retrying with the same key returns the first result instead of making the change twice.
+
+```bash
+curl https://www.fandom.ai/api/v1/campaigns \
+  -H "Authorization: Bearer $FANDOM_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: spring-launch-1" \
+  -d '{ "name": "Spring launch", "campaignType": "SEARCH" }'
+```
+
+Keys are remembered for 24 hours. Reusing one with a different body returns `409`.

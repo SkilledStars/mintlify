@@ -1,64 +1,57 @@
 ---
-title: 'Quickstart'
-description: 'Get started consuming data from super.fans API'
+title: "Quickstart"
+description: "Your first call in two minutes."
 ---
 
-## Generating your API Key
+<Steps>
+  <Step title="Create an API key">
+    In Fandom, open **Settings → API access** and click **New key**. Choose what it can do, then copy it. The key starts with `fnd_` and is shown once.
 
-You can generate an API key through your super.fans developer portal.  All requests to the super.fans API must include an authorization header with your API key as the bearer token.
+    Only workspace admins can create keys.
+  </Step>
+  <Step title="Make a call">
+    Send the key as a bearer token.
 
-<CodeGroup>
+    <CodeGroup>
+    ```bash curl
+    curl https://www.fandom.ai/api/v1/workspace \
+      -H "Authorization: Bearer $FANDOM_API_KEY"
+    ```
 
-```bash curl
-curl -X GET 'https://super.fans/api/v1/popular-keywords?dataTag=YOUR_DATATAG' \
-  -H 'Authorization: Bearer YOUR_KEY'
-```
+    ```javascript JavaScript
+    const res = await fetch("https://www.fandom.ai/api/v1/workspace", {
+      headers: { Authorization: `Bearer ${process.env.FANDOM_API_KEY}` },
+    });
+    console.log(await res.json());
+    ```
 
-```javascript fetch
-const options = {
-  method: 'GET',
-  headers: {Authorization: 'Bearer YOUR_KEY'}
-};
+    ```python Python
+    import os, requests
 
-fetch('https://super.fans/api/v1/popular-keywords?dataTag=YOUR_DATATAG', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-```
-</CodeGroup>
+    res = requests.get(
+        "https://www.fandom.ai/api/v1/workspace",
+        headers={"Authorization": f"Bearer {os.environ['FANDOM_API_KEY']}"},
+    )
+    print(res.json())
+    ```
+    </CodeGroup>
 
-## Making Requests
-Most fields will require setting the following fields:
-<ResponseField name="dataTag" type="Array(string)" required>
-The dataset you want to analyze.  Your available dataset slugs can be found on your developer dashboard 
+    You get the workspace's counts and its latest campaigns.
+  </Step>
+  <Step title="Create a campaign">
+    ```bash
+    curl https://www.fandom.ai/api/v1/campaigns \
+      -H "Authorization: Bearer $FANDOM_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Spring launch",
+        "campaignType": "DEMAND_GEN",
+        "objective": "Reach parents who buy building toys"
+      }'
+    ```
 
-Example: `demo_tag`
-</ResponseField>
-<ResponseField name="keywords" type="Array(string)" required>
-The keywords you want to filter by
+    The campaign appears in Fandom straight away. Its `url` opens it there.
+  </Step>
+</Steps>
 
-Example: `[keyword1,keyword2]`
-
-</ResponseField>
-<ResponseField name="startDate" type="Date" required>
-The start date of the time period to analyze
-
-Example: `1/1/2024`
-
-</ResponseField>
-<ResponseField name="endDate" type="Date" required>
-The end date of the time period to analyze
-
-Example: `1/30/2024`
-
-</ResponseField>
-
-Each request will contain various other fields depending on the request type and type of filtering.  To see a full list of endpoints available, checkout the <a href="https://docs.super.fans/api-reference">api reference</a>.
-
-## Limitations
-3,500 requests per day (<a href="mailto:support@super.fans">contact us</a> to increase)
-
-## Questions?
-Contact support@super.fans if you have any issues getting setup or would like to customize the endpoints available for additional use cases.
-
-Many additional endpoints and filters will be coming soon.
+Next, [build a complete campaign](/guides/campaign), from brand to Google Ads.
