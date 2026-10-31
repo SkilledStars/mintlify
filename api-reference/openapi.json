@@ -7,9 +7,6 @@
   },
   "servers": [
     {
-      "url": "https://fandom-beta-staging.vercel.app/api/v1"
-    },
-    {
       "url": "https://www.fandom.ai/api/v1"
     }
   ],
@@ -49,7 +46,7 @@
     },
     {
       "name": "Audience Exploration",
-      "description": "Who an audience is on YouTube: the channels they watch and how they group. Invite-only for now."
+      "description": "Who an audience is on YouTube: the channels they watch and how they group."
     }
   ],
   "paths": {
@@ -5642,17 +5639,23 @@
           "Audience Exploration"
         ],
         "summary": "Search YouTube audiences",
-        "description": "Find a starting point for a map: channels by name, channels whose audiences talk about your words, topics, and saved audiences.\n\nScope: `exploration:read`.",
+        "description": "Find a starting point for a map: channels by name, channels whose audiences talk about your words, topics, and saved audiences. Leave q out to see what the workspace can start from: its campaigns, audiences and brands.\n\nScope: `exploration:read`.",
         "parameters": [
           {
             "name": "q",
             "in": "query",
-            "required": true,
+            "required": false,
             "description": "A channel name, @handle, YouTube URL or a few words about an audience.",
             "schema": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 200
+              "anyOf": [
+                {
+                  "not": {}
+                },
+                {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              ]
             }
           }
         ],
@@ -5666,6 +5669,91 @@
                   "properties": {
                     "query": {
                       "type": "string"
+                    },
+                    "startFrom": {
+                      "type": "object",
+                      "properties": {
+                        "campaigns": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "brandName": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "brandName"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "audiences": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "preset": {
+                                "type": "boolean"
+                              },
+                              "channels": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "preset",
+                              "channels"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "brands": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "description"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "campaigns",
+                        "audiences",
+                        "brands"
+                      ],
+                      "additionalProperties": false,
+                      "description": "What the workspace can start from. Only when no search words were given."
                     },
                     "channels": {
                       "type": "array",
@@ -5826,7 +5914,7 @@
           "Audience Exploration"
         ],
         "summary": "Map an audience",
-        "description": "The channels an audience also watches, grouped by shared commenters, with people counts. Built from real YouTube comment data; takes a few seconds the first time.\n\nScope: `exploration:read`.",
+        "description": "The channels an audience also watches, grouped by shared commenters, with people counts. Built from real YouTube comment data; takes a few seconds the first time. Size 160 is the app's Expand map.\n\nScope: `exploration:read`.",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -5908,11 +5996,179 @@
                               "type": "string",
                               "pattern": "^[a-f0-9]{24}$",
                               "description": "Audience id."
+                            },
+                            "preset": {
+                              "type": "boolean",
+                              "description": "One of Fandom's own audiences, as search_exploration says. Worked out when you leave it out."
                             }
                           },
                           "required": [
                             "type",
                             "audienceId"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "channels"
+                            },
+                            "channelIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "pattern": "^UC[A-Za-z0-9_-]{22}$",
+                                "description": "YouTube channel id, e.g. `UCX6OQ3DkcsbYNE6H8uQQuVA`."
+                              },
+                              "minItems": 1,
+                              "maxItems": 16,
+                              "description": "A group of channels, mapped as one audience."
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 80,
+                              "description": "What to call the group."
+                            },
+                            "of": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "maxLength": 80
+                              },
+                              "maxItems": 4,
+                              "description": "What the group was taken from, outermost first, as a group's `expand` says."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "channelIds",
+                            "label"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "topic"
+                            },
+                            "topic": {
+                              "type": "string",
+                              "minLength": 2,
+                              "maxLength": 80,
+                              "description": "A topic from search_exploration."
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "conversation",
+                                "content"
+                              ],
+                              "description": "What viewers talk about, or what channels publish."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "topic",
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "campaign"
+                            },
+                            "campaignId": {
+                              "type": "string",
+                              "pattern": "^[a-f0-9]{24}$",
+                              "description": "Campaign id."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "campaignId"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "link"
+                            },
+                            "url": {
+                              "type": "string",
+                              "minLength": 4,
+                              "maxLength": 500,
+                              "description": "A YouTube channel or video link, an @handle, or a website."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "url"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "inclusion_list"
+                            },
+                            "listId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64,
+                              "description": "A finished inclusion list: its top channels are mapped."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "listId"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "project"
+                            },
+                            "projectId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64,
+                              "description": "A project: its most relevant channels are mapped."
+                            },
+                            "selection": {
+                              "type": "string",
+                              "maxLength": 200,
+                              "description": "Part of its map: a cluster number or name."
+                            },
+                            "channelIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "pattern": "^UC[A-Za-z0-9_-]{22}$",
+                                "description": "YouTube channel id, e.g. `UCX6OQ3DkcsbYNE6H8uQQuVA`."
+                              },
+                              "maxItems": 16,
+                              "description": "Or exactly these channels of it."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "projectId"
                           ],
                           "additionalProperties": false
                         }
@@ -5957,8 +6213,16 @@
                     "title": {
                       "type": "string"
                     },
+                    "url": {
+                      "type": "string",
+                      "description": "This map in the app."
+                    },
                     "builtAt": {
                       "type": "string"
+                    },
+                    "canExpand": {
+                      "type": "boolean",
+                      "description": "A bigger map of the same sources may hold more channels: ask for size 160."
                     },
                     "notes": {
                       "type": "array",
@@ -6015,6 +6279,10 @@
                             ],
                             "description": "`core` is the audience you asked about; `adjacent` groups share its commenters."
                           },
+                          "description": {
+                            "type": "string",
+                            "description": "Who these people are."
+                          },
                           "themes": {
                             "type": "array",
                             "items": {
@@ -6032,6 +6300,31 @@
                             "items": {
                               "type": "string"
                             }
+                          },
+                          "expand": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "channels"
+                              },
+                              "channelIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "channelIds",
+                              "label"
+                            ],
+                            "additionalProperties": false,
+                            "description": "A source for build_exploration_map: this group as its own map."
                           },
                           "people": {
                             "type": [
@@ -6059,16 +6352,18 @@
                               "number",
                               "null"
                             ],
-                            "description": "How over-represented the core audience is here (1.3 = 30% more than elsewhere on the map). Null for the core itself."
+                            "description": "How many times more common the core audience is here than among everyone we see on YouTube (1.3 = 30% more). Null for the core itself."
                           }
                         },
                         "required": [
                           "id",
                           "name",
                           "kind",
+                          "description",
                           "themes",
                           "relevance",
                           "channelIds",
+                          "expand",
                           "people",
                           "reach",
                           "concentration",
@@ -6160,7 +6455,7 @@
                               "number",
                               "null"
                             ],
-                            "description": "How over-represented the core audience is here (1.3 = 30% more than elsewhere on the map). Null for the core itself."
+                            "description": "How many times more common the core audience is here than among everyone we see on YouTube (1.3 = 30% more). Null for the core itself."
                           }
                         },
                         "required": [
@@ -6187,7 +6482,9 @@
                   },
                   "required": [
                     "title",
+                    "url",
                     "builtAt",
+                    "canExpand",
                     "notes",
                     "audience",
                     "groups",

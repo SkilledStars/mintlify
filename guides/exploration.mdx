@@ -3,11 +3,7 @@ title: "Explore an audience"
 description: "See which channels an audience also watches, and how they group."
 ---
 
-<Info>
-  Audience Exploration is invite-only. Keys need the `exploration:read` scope, and the workspace needs access. Ask Fandom to turn it on.
-</Info>
-
-Maps are built from who actually comments on which YouTube channels. Channels whose commenters overlap are grouped together.
+Maps are built from who actually comments on which YouTube channels. Channels whose commenters overlap are grouped together. Keys need the `exploration:read` scope.
 
 <Steps>
   <Step title="Find a starting point">
@@ -24,7 +20,7 @@ Maps are built from who actually comments on which YouTube channels. Channels wh
       -H "Content-Type: application/json" \
       -d '{ "sources": [{ "type": "channel", "channelId": "UCX6OQ3DkcsbYNE6H8uQQuVA" }] }'
     ```
-    Sources can also be `query` (plain words), `brand` or `audience`. Combine up to eight.
+    Sources can also be `query` (plain words), `channels`, `topic`, `brand`, `audience`, `campaign`, `link`, `inclusion_list` or `project`. Combine up to eight.
 
     The result lists up to 110 channels (`size` up to 160) and their `groups`. The `core` group is the audience you asked about. For each group and channel:
 
@@ -46,3 +42,5 @@ Maps are built from who actually comments on which YouTube channels. Channels wh
 </Steps>
 
 To turn a map into a campaign, collect the channels you like into a [data store](/guides/campaign), then build an audience from it.
+
+AI apps can go further: split a map by life stage or themes, compare brands, find small channels with loyal audiences and write reports. See [what you can ask](/guides/mcp-examples).

@@ -30,10 +30,11 @@ Branch on `code`; show `message` to people. Include `requestId` when you contact
 | 429 | `rate_limited` | Too many requests. Wait and retry. |
 | 502 | `upstream_error` | Google Ads didn't answer as expected. The message says whether anything changed. |
 | 500 | `internal_error` | Our fault. Retry; if it keeps happening, send us the `requestId`. |
+| 503 | `unavailable` | Temporarily unavailable. Retry shortly. |
 
 ## Rate limits
 
-Each key can make 120 requests a minute. Every response shows where you are:
+Each key or connected app can make 120 requests a minute. Every API response shows where you are:
 
 | Header | Value |
 | --- | --- |

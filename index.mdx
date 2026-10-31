@@ -1,37 +1,32 @@
 ---
-title: "Fandom API"
+title: "Fandom docs"
 sidebarTitle: "Introduction"
-description: "Build YouTube-audience campaigns from your own code or AI apps."
+description: "Use Fandom from your AI apps, or build on it with the API."
 ---
 
-Create campaigns, build audiences from YouTube data, generate targeting and send campaigns to Google Ads. Anything you do through the API shows up in the Fandom app exactly as if you'd done it there.
+Ask your AI app about YouTube audiences, or build on Fandom from your own code. Anything either one does shows up in the Fandom app exactly as if you'd done it there.
 
 <CardGroup cols={2}>
+  <Card title="Connect an AI app" icon="plug" href="/guides/mcp">
+    Claude, ChatGPT, Cursor and others. No code.
+  </Card>
+  <Card title="What you can ask" icon="comments" href="/guides/mcp-examples">
+    Audiences, inclusion lists, projects and campaigns.
+  </Card>
   <Card title="Quickstart" icon="rocket" href="/quickstart">
-    Your first call in two minutes.
+    Your first API call in two minutes.
   </Card>
   <Card title="Build a campaign" icon="route" href="/guides/campaign">
     From a brand to a paused Google Ads campaign.
   </Card>
-  <Card title="Use it from AI apps" icon="plug" href="/mcp">
-    Claude, ChatGPT, Cursor and other MCP clients.
-  </Card>
-  <Card title="Explore an audience" icon="compass" href="/guides/exploration">
-    The channels an audience also watches.
-  </Card>
 </CardGroup>
 
-## Base URL
+## Addresses
 
-```text
-https://www.fandom.ai/api/v1
-```
-
-<Note>
-  **Staging.** Until the next release, this API runs on staging at
-  `https://fandom-beta-staging.vercel.app/api/v1`. The **Try it** panel calls
-  staging, so make your key there with **Get an API key**.
-</Note>
+| For | Address |
+| --- | --- |
+| AI apps (MCP) | `https://www.fandom.ai/mcp` |
+| API | `https://www.fandom.ai/api/v1` |
 
 ## How it fits together
 
@@ -40,4 +35,10 @@ https://www.fandom.ai/api/v1
 - Fandom generates **targeting** for each audience: keywords, segments, topics and websites.
 - When it's ready, create the campaign in **Google Ads**. It starts paused.
 
-**Audience Exploration** shows who an audience is on YouTube: the channels they also watch, and how those channels group. It's invite-only for now.
+Three more views help you find the right audience:
+
+- **Audience Exploration** shows who an audience is on YouTube: the channels they also watch, and how those channels group.
+- **Inclusion lists** rank channels for ads or sponsorship, grown from seed channels and checked against a brief.
+- **Projects** map everyone around a set of starting channels, and hold their reports and lists.
+
+AI apps can use all of it. The API covers campaigns and everything around them, plus the basics of [Audience Exploration](/guides/exploration).

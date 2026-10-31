@@ -1,0 +1,109 @@
+---
+title: "Connect an AI app"
+description: "Use Fandom from Claude, ChatGPT, Cursor and other AI apps. No code."
+---
+
+Add Fandom to your AI app once, then ask about audiences, inclusion lists, projects and campaigns in plain English. It uses your Fandom account, through this address:
+
+```text
+https://www.fandom.ai/mcp
+```
+
+## Connect
+
+<Tabs>
+  <Tab title="Claude">
+    1. Go to **Customize → Connectors** and add a custom connector.
+    2. Name it `Fandom` and paste the address above.
+    3. Connect, sign in with your Fandom account and click allow.
+
+    On Team and Enterprise plans, an owner adds it once under **Organization settings → Connectors**, then each person connects. See [Claude's guide](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+  </Tab>
+  <Tab title="ChatGPT">
+    1. On the web, go to **Plugins**, click **+** and choose **Add custom MCP server**.
+    2. Paste the address above and choose OAuth.
+    3. Sign in with your Fandom account and click allow.
+    4. In a new chat, type `@` and pick Fandom.
+
+    Custom MCP servers need a Business, Enterprise or Edu plan, and your admin may need to allow them. See [OpenAI's guide](https://developers.openai.com/api/docs/guides/custom-mcp-server).
+  </Tab>
+  <Tab title="Claude Code">
+    ```bash
+    claude mcp add --transport http --scope user fandom https://www.fandom.ai/mcp
+    ```
+
+    Then run `/mcp` in a session, choose `fandom`, sign in with your Fandom account and click allow. See [Claude Code's guide](https://code.claude.com/docs/en/mcp).
+  </Tab>
+  <Tab title="Cursor">
+    Add this to `~/.cursor/mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "fandom": { "url": "https://www.fandom.ai/mcp" }
+      }
+    }
+    ```
+
+    Then open the MCP section of Cursor's settings, connect `fandom`, sign in with your Fandom account and click allow. See [Cursor's guide](https://cursor.com/docs/mcp).
+  </Tab>
+  <Tab title="Others">
+    Any app that supports remote MCP servers can connect. Paste the address above, then sign in with your Fandom account and click allow. If it can't sign in, [use an API key](#use-an-api-key-instead).
+  </Tab>
+</Tabs>
+
+That's it. Nobody has to approve it, and it works right away. Next, see [what you can ask](/guides/mcp-examples).
+
+<Note>
+  Use `www.fandom.ai/mcp`. The similar `docs.fandom.ai/mcp` only searches these docs.
+</Note>
+
+## What your app can do
+
+| Area | For example |
+| --- | --- |
+| Audience Exploration | Map an audience, split it by group or life stage, find channels and write reports |
+| Inclusion lists | Build ranked channel lists from a topic or seed channels, and download them |
+| Projects | Map an audience around starting channels, ask questions and make reports to share |
+| Campaigns | Manage brands, audiences, data stores and targeting, and create paused Google Ads campaigns |
+
+## Who can do what
+
+- **It acts as you.** Your workspace role limits what the app can do with campaigns, audiences, brands and data stores. Audience Exploration, inclusion lists and projects are open to every member.
+- **It can read and write by default.** Changes are marked, so most apps ask before making one.
+- **Admins stay in control.** In **Settings → API & MCP → Connected apps**, admins can see who connected each app, rename it, limit it to read only, or disconnect it.
+- **Nothing spends.** Google Ads campaigns are always created paused. Nothing spends until someone turns the campaign on in Google Ads.
+
+Each app can make 120 requests a minute.
+
+## If something's not working
+
+| What you see | What to do |
+| --- | --- |
+| "A workspace administrator disconnected this app" | Ask an admin to choose **Allow again** under Connected apps. |
+| "This key needs the ... scope" when making a change | The app is set to read only. Ask an admin to switch it to read + write. |
+| "Your workspace role doesn't allow this" | Ask an admin to change your role under **Settings → Permissions**. |
+| "You do not have access to that workspace" | Ask your app which workspaces it can use, or check you signed in to the right organization. |
+| The app asks you to sign in again | Sign in again. Connections can expire. |
+
+## Use an API key instead
+
+For scripts, or apps that can't sign in, send an [API key](/authentication) as a header. Only workspace admins can create keys. A key's scopes decide what it can do, not a person's role.
+
+<CodeGroup>
+```bash Claude Code
+claude mcp add --transport http fandom https://www.fandom.ai/mcp \
+  --header "Authorization: Bearer $FANDOM_API_KEY"
+```
+
+```json Cursor
+{
+  "mcpServers": {
+    "fandom": {
+      "url": "https://www.fandom.ai/mcp",
+      "headers": { "Authorization": "Bearer ${env:FANDOM_API_KEY}" }
+    }
+  }
+}
+```
+</CodeGroup>

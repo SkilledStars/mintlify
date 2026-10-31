@@ -1,8 +1,8 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Fandom API",
-  "description": "Create YouTube-audience campaigns, audiences, data stores and targeting from your own code or AI apps.",
+  "name": "Fandom",
+  "description": "Use Fandom's YouTube audiences, inclusion lists, projects and campaigns from your AI apps or your own code.",
   "colors": {
     "primary": "#E8541E",
     "light": "#FF8A4C",
@@ -24,7 +24,7 @@
     "primary": {
       "type": "button",
       "label": "Get an API key",
-      "href": "https://fandom-beta-staging.vercel.app/api-keys"
+      "href": "https://www.fandom.ai/api-keys"
     }
   },
   "navigation": {
@@ -35,18 +35,24 @@
           {
             "group": "Get started",
             "pages": [
-              "index",
-              "quickstart",
-              "authentication",
-              "errors"
+              "index"
             ]
           },
           {
-            "group": "Guides",
+            "group": "AI apps",
             "pages": [
+              "guides/mcp",
+              "guides/mcp-examples"
+            ]
+          },
+          {
+            "group": "API",
+            "pages": [
+              "quickstart",
+              "authentication",
               "guides/campaign",
               "guides/exploration",
-              "mcp"
+              "errors"
             ]
           }
         ]
@@ -57,6 +63,12 @@
       }
     ]
   },
+  "redirects": [
+    {
+      "source": "/mcp",
+      "destination": "/guides/mcp"
+    }
+  ],
   "api": {
     "playground": {
       "display": "interactive"
