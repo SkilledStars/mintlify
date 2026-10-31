@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Fandom",
-  "description": "Use Fandom's YouTube audiences, inclusion lists, projects and campaigns from your AI apps or your own code.",
+  "description": "Use Fandom's YouTube audiences, inclusion lists, projects and campaigns over MCP or the API.",
   "colors": {
     "primary": "#E8541E",
     "light": "#FF8A4C",
@@ -39,7 +39,7 @@
             ]
           },
           {
-            "group": "AI apps",
+            "group": "MCP",
             "pages": [
               "guides/mcp",
               "guides/mcp-examples"

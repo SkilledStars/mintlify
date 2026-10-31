@@ -14,7 +14,7 @@ Workspace admins create keys on [the API key page](https://www.fandom.ai/api-key
 A key belongs to one workspace and acts as the admin who created it. Its scopes decide what it can do, whatever that person's role. It stops working when it's revoked there, or when that person leaves the workspace.
 
 <Note>
-  AI apps don't need a key. They [sign in](/guides/mcp) with your Fandom account, and your role applies.
+  MCP clients don't need a key. They [sign in](/guides/mcp) with your Fandom account, and your role applies.
 </Note>
 
 ## Scopes
@@ -35,7 +35,7 @@ You choose what a key can do when you create it. A request without the scope it 
 | `inclusion-lists:read`, `inclusion-lists:write` | Read and download, or create and run, inclusion lists. MCP only. |
 | `projects:read`, `projects:write` | Read, or create and work on, projects. MCP only. |
 
-MCP-only scopes apply when a key is [used with an AI app](/guides/mcp#use-an-api-key-instead). There are no API endpoints for them.
+MCP-only scopes apply when a key is [used with an MCP client](/guides/mcp#use-an-api-key-instead). There are no API endpoints for them.
 
 ## Limiting a key
 

@@ -1,9 +1,10 @@
 ---
-title: "Connect an AI app"
-description: "Use Fandom from Claude, ChatGPT, Cursor and other AI apps. No code."
+title: "Connect over MCP"
+sidebarTitle: "Connect"
+description: "Use Fandom from Claude, ChatGPT, Cursor and other MCP clients. No code."
 ---
 
-Add Fandom to your AI app once, then ask about audiences, inclusion lists, projects and campaigns in plain English. It uses your Fandom account, through this address:
+Add Fandom's MCP server to your client once, then ask about audiences, inclusion lists, projects and campaigns in plain English. It uses your Fandom account.
 
 ```text
 https://www.fandom.ai/mcp
@@ -48,7 +49,7 @@ https://www.fandom.ai/mcp
     Then open the MCP section of Cursor's settings, connect `fandom`, sign in with your Fandom account and click allow. See [Cursor's guide](https://cursor.com/docs/mcp).
   </Tab>
   <Tab title="Others">
-    Any app that supports remote MCP servers can connect. Paste the address above, then sign in with your Fandom account and click allow. If it can't sign in, [use an API key](#use-an-api-key-instead).
+    Any client that supports remote MCP servers can connect. Paste the address above, then sign in with your Fandom account and click allow. If it can't sign in, [use an API key](#use-an-api-key-instead).
   </Tab>
 </Tabs>
 
@@ -58,7 +59,7 @@ That's it. Nobody has to approve it, and it works right away. Next, see [what yo
   Use `www.fandom.ai/mcp`. The similar `docs.fandom.ai/mcp` only searches these docs.
 </Note>
 
-## What your app can do
+## What you can do
 
 | Area | For example |
 | --- | --- |
@@ -69,26 +70,26 @@ That's it. Nobody has to approve it, and it works right away. Next, see [what yo
 
 ## Who can do what
 
-- **It acts as you.** Your workspace role limits what the app can do with campaigns, audiences, brands and data stores. Audience Exploration, inclusion lists and projects are open to every member.
-- **It can read and write by default.** Changes are marked, so most apps ask before making one.
-- **Admins stay in control.** In **Settings → API & MCP → Connected apps**, admins can see who connected each app, rename it, limit it to read only, or disconnect it.
+- **It acts as you.** Your workspace role limits what your client can do with campaigns, audiences, brands and data stores. Audience Exploration, inclusion lists and projects are open to every member.
+- **It can read and write by default.** Changes are marked, so most clients ask before making one.
+- **Admins stay in control.** In **Settings → API & MCP → Connected apps**, admins can see who connected each client, rename it, limit it to read only, or disconnect it.
 - **Nothing spends.** Google Ads campaigns are always created paused. Nothing spends until someone turns the campaign on in Google Ads.
 
-Each app can make 120 requests a minute.
+Each client can make 120 requests a minute.
 
 ## If something's not working
 
 | What you see | What to do |
 | --- | --- |
 | "A workspace administrator disconnected this app" | Ask an admin to choose **Allow again** under Connected apps. |
-| "This key needs the ... scope" when making a change | The app is set to read only. Ask an admin to switch it to read + write. |
+| "This key needs the ... scope" when making a change | Your client is set to read only. Ask an admin to switch it to read + write. |
 | "Your workspace role doesn't allow this" | Ask an admin to change your role under **Settings → Permissions**. |
-| "You do not have access to that workspace" | Ask your app which workspaces it can use, or check you signed in to the right organization. |
-| The app asks you to sign in again | Sign in again. Connections can expire. |
+| "You do not have access to that workspace" | Ask your client which workspaces it can use, or check you signed in to the right organization. |
+| Your client asks you to sign in again | Sign in again. Connections can expire. |
 
 ## Use an API key instead
 
-For scripts, or apps that can't sign in, send an [API key](/authentication) as a header. Only workspace admins can create keys. A key's scopes decide what it can do, not a person's role.
+For scripts, or clients that can't sign in, send an [API key](/authentication) as a header. Only workspace admins can create keys. A key's scopes decide what it can do, not a person's role.
 
 <CodeGroup>
 ```bash Claude Code
