@@ -63,12 +63,6 @@
       }
     ]
   },
-  "redirects": [
-    {
-      "source": "/mcp",
-      "destination": "/guides/mcp"
-    }
-  ],
   "api": {
     "playground": {
       "display": "interactive"
