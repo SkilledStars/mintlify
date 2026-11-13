@@ -1,0 +1,24 @@
+{
+  "name": "fandom",
+  "owner": {
+    "name": "Fandom",
+    "url": "https://www.fandom.ai"
+  },
+  "metadata": {
+    "description": "Fandom's plugin: the MCP server for YouTube audience research, creator lists and campaigns, with its playbook skill."
+  },
+  "plugins": [
+    {
+      "name": "fandom",
+      "source": "./plugins/fandom",
+      "description": "Fandom's MCP server and the Fandom skill: map who an audience is on YouTube, find creators to sponsor or advertise on, run research projects, and build campaigns with paused Google Ads drafts.",
+      "category": "marketing",
+      "tags": [
+        "youtube",
+        "audiences",
+        "creators",
+        "mcp"
+      ]
+    }
+  ]
+}

@@ -22,11 +22,14 @@ Branch on `code`; show `message` to people. Include `requestId` when you contact
 | Status | `code` | Meaning |
 | --- | --- | --- |
 | 400 | `invalid_request` | Something is missing or wrong. The message says what. |
-| 401 | `unauthorized` | No key, or the key is wrong or revoked. |
+| 401 | `unauthorized` | No key, or the key is wrong or revoked, or its creator left the workspace. |
 | 402 | `payment_required` | The workspace's plan doesn't include this. |
 | 403 | `forbidden` | The key lacks the scope, or isn't allowed that campaign or account. |
-| 404 | `not_found` | Nothing with that id in this workspace. |
+| 404 | `not_found` | Nothing with that id in this workspace, or no endpoint at that path. |
+| 405 | `invalid_request` | Wrong method for that path. The `Allow` header lists the right ones. |
 | 409 | `conflict` | Not possible right now, for example while targeting is generating. |
+| 413 | `payload_too_large` | The body is over 1 MB. |
+| 415 | `unsupported_media_type` | Send the body as JSON, with `Content-Type: application/json`. |
 | 429 | `rate_limited` | Too many requests. Wait and retry. |
 | 502 | `upstream_error` | Google Ads didn't answer as expected. The message says whether anything changed. |
 | 500 | `internal_error` | Our fault. Retry; if it keeps happening, send us the `requestId`. |
@@ -34,15 +37,19 @@ Branch on `code`; show `message` to people. Include `requestId` when you contact
 
 ## Rate limits
 
-Each key or MCP client can make 120 requests a minute. Every API response shows where you are:
+Each key can make 120 requests a minute, shared between the API and MCP. Over MCP with a sign-in, each person can make 120 a minute from each app. Successful API responses show where you are:
 
 | Header | Value |
 | --- | --- |
 | `X-RateLimit-Limit` | Requests allowed per minute |
 | `X-RateLimit-Remaining` | Requests left this minute |
-| `X-RateLimit-Reset` | When the minute resets |
+| `X-RateLimit-Reset` | When the minute resets, as an ISO 8601 time |
 
-A `429` also sends `Retry-After`, in seconds.
+A `429` from the key's limit also sends `Retry-After: 60`.
+
+Audience Exploration also has limits per workspace: 240 requests a minute, 2 analyses at once and 60 analyses an hour. Going over returns `429` without `Retry-After`; wait a minute and try again.
+
+Over MCP, an error comes back as a tool error with `{ "error": { "code", "message" } }` and no `requestId`.
 
 ## Pages
 
@@ -52,4 +59,4 @@ Lists return up to 25 items, newest first:
 { "data": [ ... ], "nextCursor": "6524f0c1e4b0a1b2c3d4e5f6" }
 ```
 
-Pass `cursor` with the `nextCursor` value to get the next page, and `limit` (1–100) to change the size. `nextCursor` is `null` on the last page.
+Pass `cursor` with the `nextCursor` value to get the next page, and `limit` (1–100) to change the size. `nextCursor` is `null` on the last page. Lists also take `search`, to match names. `GET /google-ads/accounts` returns every account at once.

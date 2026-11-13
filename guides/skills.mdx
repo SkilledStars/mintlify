@@ -1,0 +1,47 @@
+---
+title: "Skills"
+description: "An optional playbook that helps Claude and other agents get the most out of Fandom's MCP tools."
+---
+
+Fandom's MCP server works on its own: every client gets its instructions and tools. The **Fandom skill** is an optional extra for agents that read skills. It teaches the way an analyst works with Fandom:
+
+- map first and ask before anything paid,
+- which tools to chain for a question,
+- how to present an audience, a channel list or a campaign.
+
+It's a few small Markdown files, and it never needs a key or a token.
+
+## Claude Code and Cowork
+
+Install the Fandom plugin. It adds the MCP connection and the skill together:
+
+```bash
+claude plugin marketplace add SkilledStars/mintlify
+claude plugin install fandom@fandom
+```
+
+Or type `/plugin marketplace add SkilledStars/mintlify` and `/plugin install fandom@fandom` in a session. Then run `/mcp`, choose `fandom`, sign in and click allow. In Cowork, add the same marketplace under **Customize → Plugins → Add marketplace**, then connect Fandom from the plugin's **Connectors** tab.
+
+## Claude (web and desktop app)
+
+1. [Download the skill](https://github.com/SkilledStars/mintlify/raw/main/downloads/fandom-skill.zip) (a zip of the `fandom` folder).
+2. In Claude, go to **Customize → Skills**, click **+**, and upload the zip.
+3. [Connect Fandom's MCP server](/guides/mcp) if you haven't yet.
+
+Skills need **Code execution and file creation** turned on under **Settings → Capabilities**. On Team and Enterprise plans, an owner can turn the skill on for everyone.
+
+## Other agents
+
+The skill follows the open [Agent Skills](https://agentskills.io) format, so agents that read skill folders can use it too, for example Codex, GitHub Copilot, Cursor and Gemini CLI. Unzip the download into the folder your agent reads skills from (such as `.agents/skills/` in a project), and connect Fandom's MCP server in that agent.
+
+## What's in it
+
+| File | What it covers |
+| --- | --- |
+| `SKILL.md` | How to work with Fandom: map first, pass what the person said, ask before anything paid, collect slow work with `get_job`, and how to answer |
+| `references/explore.md` | Who an audience is: map, split, open groups, rank channels, write it up |
+| `references/lists.md` | Creators to sponsor or advertise on: read a brief, check seeds, build, read and export a list |
+| `references/projects.md` | Research projects: plan, build, ask, report and share |
+| `references/campaigns.md` | Brands, data stores, audiences, campaigns, targeting and paused Google Ads drafts |
+
+The source is in [the docs repository](https://github.com/SkilledStars/mintlify/tree/main/plugins/fandom). The skill names tools and steps, not their arguments, so it keeps working as the tools gain options.

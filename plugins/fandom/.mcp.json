@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "fandom": {
+      "type": "http",
+      "url": "https://www.fandom.ai/mcp"
+    }
+  }
+}

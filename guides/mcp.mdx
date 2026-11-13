@@ -4,36 +4,39 @@ sidebarTitle: "Connect"
 description: "Use Fandom from Claude, ChatGPT, Cursor and other MCP clients. No code."
 ---
 
-Add Fandom's MCP server to your client once, then ask about audiences, inclusion lists, projects and campaigns in plain English. It uses your Fandom account.
+Add Fandom's MCP server to your client once, then ask about audiences, inclusion lists, projects, Trends and campaigns in plain words. It uses your Fandom account.
 
 ```text
 https://www.fandom.ai/mcp
 ```
 
+You sign in on **super.fans**, Fandom's sign-in service. When it asks, pick your Fandom organization.
+
 ## Connect
 
 <Tabs>
   <Tab title="Claude">
-    1. Go to **Customize → Connectors** and add a custom connector.
-    2. Name it `Fandom` and paste the address above.
-    3. Connect, sign in with your Fandom account and click allow.
+    1. Go to **Customize → Connectors**, click **Add** and choose **Add custom connector**.
+    2. Name it `Fandom`, paste the address above and click **Continue**.
+    3. Keep the sign-in settings Claude detects (**Register automatically**), then click **Add**.
+    4. Click **Connect**, sign in and click allow.
 
-    On Team and Enterprise plans, an owner adds it once under **Organization settings → Connectors**, then each person connects. See [Claude's guide](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+    On Team and Enterprise plans, an owner adds it once under **Organization settings → Connectors → Add → Custom → Web**, then each person connects. See [Claude's guide](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
   </Tab>
   <Tab title="ChatGPT">
     1. On the web, go to **Plugins**, click **+** and choose **Add custom MCP server**.
-    2. Paste the address above and choose OAuth.
-    3. Sign in with your Fandom account and click allow.
+    2. Name it `Fandom`, paste the address above and choose OAuth.
+    3. Accept the warning, choose **Create as a plugin**, then install it. You sign in here: sign in and click allow.
     4. In a new chat, type `@` and pick Fandom.
 
-    Custom MCP servers need a Business, Enterprise or Edu plan, and your admin may need to allow them. See [OpenAI's guide](https://developers.openai.com/api/docs/guides/custom-mcp-server).
+    Your ChatGPT plan and workspace settings must allow custom MCP servers. See [OpenAI's guide](https://developers.openai.com/api/docs/guides/custom-mcp-server).
   </Tab>
   <Tab title="Claude Code">
     ```bash
     claude mcp add --transport http --scope user fandom https://www.fandom.ai/mcp
     ```
 
-    Then run `/mcp` in a session, choose `fandom`, sign in with your Fandom account and click allow. See [Claude Code's guide](https://code.claude.com/docs/en/mcp).
+    Then run `/mcp` in a session, choose `fandom`, sign in and click allow. See [Claude Code's guide](https://code.claude.com/docs/en/mcp).
   </Tab>
   <Tab title="Cursor">
     Add this to `~/.cursor/mcp.json`:
@@ -46,14 +49,14 @@ https://www.fandom.ai/mcp
     }
     ```
 
-    Then open the MCP section of Cursor's settings, connect `fandom`, sign in with your Fandom account and click allow. See [Cursor's guide](https://cursor.com/docs/mcp).
+    Then open **Customize** in Cursor's sidebar, turn on `fandom`, sign in and click allow. See [Cursor's guide](https://cursor.com/docs/mcp).
   </Tab>
   <Tab title="Others">
-    Any client that supports remote MCP servers can connect. Paste the address above, then sign in with your Fandom account and click allow. If it can't sign in, [use an API key](#use-an-api-key-instead).
+    Any client that supports remote MCP servers over Streamable HTTP can connect. Paste the address above, then sign in and click allow. Sign-in uses OAuth with dynamic client registration. If your client can't sign in, [use an API key](#use-an-api-key-instead).
   </Tab>
 </Tabs>
 
-That's it. Nobody has to approve it, and it works right away. Next, see [what you can ask](/guides/mcp-examples).
+That's it. Nobody has to approve it, and it works right away. Next, see [what you can ask](/guides/mcp-examples), or the [full list of tools](/guides/mcp-tools).
 
 <Note>
   Use `www.fandom.ai/mcp`. The similar `docs.fandom.ai/mcp` only searches these docs.
@@ -63,37 +66,47 @@ That's it. Nobody has to approve it, and it works right away. Next, see [what yo
 
 | Area | For example |
 | --- | --- |
-| Audience Exploration | Map an audience, split it by group or life stage, find channels and write reports |
-| Inclusion lists | Build ranked channel lists from a topic or seed channels, and download them |
-| Projects | Map an audience around starting channels, ask questions and make reports to share |
+| Audience Exploration | Map any audience you can describe, split it by group, theme or life stage, find channels and write reports |
+| Inclusion lists | Build ranked channel lists from a brief, a topic or seed channels, and download them |
+| Projects | Map everyone around starting channels, ask questions and make reports to share |
+| Trends | Keep a question on a set of channels and get answers daily or weekly |
 | Campaigns | Manage brands, audiences, data stores and targeting, and create paused Google Ads campaigns |
+
+## Ask the way you'd say it
+
+- **Names are enough.** Every tool takes channel names, @handles, YouTube channel or video links, websites, links to Fandom pages, and the names of your lists, projects, reports, brands, audiences and campaigns. Your client doesn't need ids.
+- **Each answer says how it read you.** It starts with "Read your request as: …" when it matched a name or adjusted something, such as a size that was too big.
+- **Big jobs reply "working".** Your client checks back with `get_job` until the answer is ready. List runs and project builds take minutes; ask "is it ready?" any time.
+- **Your current workspace is used.** If you belong to several, Fandom uses the one you last used from that app. Say another workspace's name to switch.
 
 ## Who can do what
 
-- **It acts as you.** Your workspace role limits what your client can do with campaigns, audiences, brands and data stores. Audience Exploration, inclusion lists and projects are open to every member.
-- **It can read and write by default.** Changes are marked, so most clients ask before making one.
-- **Admins stay in control.** In **Settings → API & MCP → Connected apps**, admins can see who connected each client, rename it, limit it to read only, or disconnect it.
-- **Nothing spends.** Google Ads campaigns are always created paused. Nothing spends until someone turns the campaign on in Google Ads.
+- **It acts as you.** Your workspace role limits what your client can do with campaigns, audiences, brands, data stores and Google Ads accounts. Audience Exploration, inclusion lists, projects and Trends are open to every member, including saving a map's channels as an audience or a campaign.
+- **It can read and write by default.** Admins can limit an app to read only under **Settings → API & MCP → Connected apps**, where they can also see who connected it, rename it or disconnect it. A read-only app can still map, read and write reports; it can't save or change things.
+- **No ad spend.** Google Ads campaigns are always created paused. Nothing spends until someone turns the campaign on in Google Ads, and targeting reaches Google Ads when someone syncs the campaign in Fandom.
+- **Some research costs.** Inclusion list runs, project builds, project lenses and reports, and Trends spend AI or start paid runs. Their tools say so, and Fandom tells your client to ask you first. Maps, splits, channel details and audience reports run freely.
 
-Each client can make 120 requests a minute.
+Each person can make 120 requests a minute from each app. Audience Exploration also has a workspace limit: 240 requests a minute, 2 analyses at once and 60 analyses an hour.
 
 ## If something's not working
 
 | What you see | What to do |
 | --- | --- |
-| "A workspace administrator disconnected this app" | Ask an admin to choose **Allow again** under Connected apps. |
-| "This key needs the ... scope" when making a change | Your client is set to read only. Ask an admin to switch it to read + write. |
-| "Your workspace role doesn't allow this" | Ask an admin to change your role under **Settings → Permissions**. |
-| "You do not have access to that workspace" | Ask your client which workspaces it can use, or check you signed in to the right organization. |
-| Your client asks you to sign in again | Sign in again. Connections can expire. |
+| Your client keeps asking you to sign in | Sign in again and pick your Fandom organization when asked. Sign-in needs an organization. |
+| "A workspace administrator disconnected this app" | Ask an admin to choose **Allow again** under Connected apps (in the list of disconnected apps). |
+| "This app isn't connected to this workspace" | Connect it again from your client. |
+| "This app is connected to Fandom with read-only access" | Ask an admin to switch the app to read + write under Connected apps. |
+| "This key needs the ... scope" | You're using an API key without that scope. Make a key with it. |
+| "Your workspace role doesn't allow this" | Ask an admin to change your role under **Permissions** in the sidebar. |
+| "There's no workspace …" | The answer lists your workspaces. Use one of those names. |
 
 ## Use an API key instead
 
-For scripts, or clients that can't sign in, send an [API key](/authentication) as a header. Only workspace admins can create keys. A key's scopes decide what it can do, not a person's role.
+For scripts, or clients that can't sign in, send an [API key](/authentication) as a header. Only workspace admins can create keys. A key's scopes decide what it can do, not a person's role, and it always works in the workspace it was made in.
 
 <CodeGroup>
 ```bash Claude Code
-claude mcp add --transport http fandom https://www.fandom.ai/mcp \
+claude mcp add --transport http --scope user fandom https://www.fandom.ai/mcp \
   --header "Authorization: Bearer $FANDOM_API_KEY"
 ```
 
@@ -108,3 +121,5 @@ claude mcp add --transport http fandom https://www.fandom.ai/mcp \
 }
 ```
 </CodeGroup>
+
+The Claude Code command stores the key in its settings file. Use a key you can revoke, and revoke it under **Settings → API & MCP** if it leaks.

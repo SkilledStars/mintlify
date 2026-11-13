@@ -1,0 +1,19 @@
+{
+  "name": "fandom",
+  "version": "1.0.0",
+  "description": "Fandom's MCP server and the Fandom skill: map who an audience is on YouTube, find creators to sponsor or advertise on, run research projects, and build campaigns with paused Google Ads drafts.",
+  "author": {
+    "name": "Fandom",
+    "url": "https://www.fandom.ai"
+  },
+  "homepage": "https://docs.fandom.ai/guides/skills",
+  "repository": "https://github.com/SkilledStars/mintlify",
+  "keywords": [
+    "youtube",
+    "audiences",
+    "creators",
+    "influencer marketing",
+    "google ads",
+    "mcp"
+  ]
+}

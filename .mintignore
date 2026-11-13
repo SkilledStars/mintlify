@@ -1,0 +1,4 @@
+# The Claude plugin and skill files are downloads, not docs pages.
+plugins/
+downloads/
+.claude-plugin/

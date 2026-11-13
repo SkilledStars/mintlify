@@ -42,7 +42,9 @@
             "group": "MCP",
             "pages": [
               "guides/mcp",
-              "guides/mcp-examples"
+              "guides/mcp-examples",
+              "guides/mcp-tools",
+              "guides/skills"
             ]
           },
           {
@@ -90,7 +92,7 @@
         "header": "Fandom",
         "items": [
           {
-            "label": "fandom.ai",
+            "label": "www.fandom.ai",
             "href": "https://www.fandom.ai"
           },
           {

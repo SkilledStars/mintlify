@@ -1,0 +1,166 @@
+---
+title: "MCP tools"
+description: "Every tool Fandom's MCP server offers, what it does, and whether it changes anything."
+---
+
+{/* Generated from the server's own catalog by scripts/export-mcp-tools.ts in the app repository. Don't edit by hand. */}
+
+Your MCP client picks these for you: just ask in plain words. This page is for when you want to know exactly what's there. There are 86 tools in all.
+
+Every tool takes what a person would write: channel names, @handles, YouTube channel or video links, websites, Fandom links, and the names of your lists, projects, reports, brands, audiences and campaigns. Each reply starts with how the request was read. Tools that change nothing never need permission; tools that spend AI or start a paid run say so in their description.
+
+Every tool also takes an optional `enterpriseSlug` to pick a workspace (the one you used last otherwise), and tools that change something take an optional `idempotencyKey` for safe retries. A tool that takes a while replies `"working"` with a `jobId`: call `get_job` with it.
+
+## Audience Exploration
+
+Map who an audience is on YouTube, regroup it, open its groups, rank its channels and write it up.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `search_exploration` | No | Find a starting point for a map: channels by name, channels whose audiences talk about your words, topics, and saved audiences. Leave q out to see what the workspace can start from: its campaigns, audiences and brands. |
+| `build_exploration_map` | No | The channels an audience also watches, grouped by shared commenters, with people counts. Built from real YouTube comment data; takes a few seconds the first time. Size 160 is the app's Expand map. |
+| `get_exploration_channel` | No | What a channel makes, its topics and its latest videos. |
+| `split_exploration_map` | No | A map's channels split into groups, with each group's numbers, what they mean, its top channels and a source to map it on its own. Filter it, or open a group and split again with `within`. Themes and life stage take seconds; compare and custom a minute or so, so they may reply "working". |
+| `get_exploration_segment` | No | One theme, life stage, product or custom group of a split: how into it this audience is, the channels most into it, and what counts as it (the channels behind every number for it, and the closest that didn't count). |
+| `list_exploration_channels` | No | The channels of a map, or of an opened group, sorted by any stat on the page: reach, concentration, sponsor fit, fan density, hidden gems, subscribers or name. A sort only ranks the channels it applies to. Find a channel with search; pass download for the same CSV as the page. |
+| `get_map_channel` | No | A channel's panel on a map: how much of the audience comments there, what it's about, what its fans talk about, and which other channels its commenters also comment on. With a split, what its commenters are into. For the channel without a map, use get_exploration_channel. |
+| `get_fan_subscriptions` | No | What the people who comment on these channels subscribe to, beyond the map, from their public subscription lists. Pass a map (and a group with `within`), or channels by name, @handle or link. Takes a few seconds. |
+| `get_exploration_macro_view` | No | The page's Macro switch: up to about 1,500 channels grown from the map's own, grouped into audiences. Page through one audience's channels, or search them. |
+| `create_audience_from_channels` | Yes | The page's Create: saves channels from a map as an audience (a data store of them, collected over minutes, and an audience linked to it), or also a draft campaign with targeting starting to generate. Several groups go into one campaign, one audience each. A name already used by an audience made this way reuses it. No Google Ads campaign is created. For an inclusion list from a map, call create_inclusion_list with the top channels. |
+| `create_audience_report` | No | A written report on a map's audience: who they are, where else they gather, how deep the fandom goes, channels to partner with and what to do next, every number computed, plus the channel's own stats or the brands its channels work with. Takes a minute or two, so it may reply "working". A report written in the last hour comes back at once; fresh writes it again; save keeps it in the workspace's Reports. |
+| `list_audience_reports` | No | The workspace's saved audience reports, newest first. |
+| `get_audience_report` | No | One saved report, whole, as it was written. |
+| `rename_audience_report` | Yes | Changes a saved report's name for everyone in the workspace. |
+| `delete_audience_report` | Yes | Removes a saved report for everyone in the workspace. Check with the person first. |
+
+## Inclusion lists
+
+Ranked, evidenced channel lists for ads or sponsorship, grown from seed channels and checked against a brief.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_inclusion_lists` | No | The workspace's inclusion lists, with how each one's last run went. |
+| `propose_inclusion_list` | No | Reads a pasted brief, email or message and proposes a list's settings: seeds, topic, brief, size and filters. It saves nothing; check it with the person, then call create_inclusion_list. |
+| `check_inclusion_channels` | No | Before building a list: finds the channels you mean, says how much data each has (Tier A to D, and what that gets you), how many channels a list from them can hold, and about how long it takes. Saves nothing. |
+| `create_inclusion_list` | Yes | Saves a list and starts building it: which channels the seeds' fans also watch, each reviewed for fit. It takes minutes; check with get_inclusion_list. Names that match several channels come back as choices and nothing is saved. Sizes past the open limit come down to it and the reply says so. |
+| `update_inclusion_list` | Yes | Changes a saved list's settings. Only what you pass changes. Channels already built stay as they were until run_inclusion_list. |
+| `run_inclusion_list` | Yes | Builds a saved list again with its current settings. Re-running is cheap: channels already reviewed aren't reviewed twice. Only the latest run keeps its channels. |
+| `get_inclusion_list` | No | A list's settings, how its run is going, and when it's done: how confident it is, seed data and overlap, how it was made, the top channels, and how to map them. |
+| `list_inclusion_list_channels` | No | A finished list's channels, a page at a time. Views: ranked (the list), full (everything found, including what didn't make the ranking), fan_density (channels a seed's commenters subscribe to far more than usual) and flagged (for brand-safety review; a flag never removes or down-ranks a channel). |
+| `export_inclusion_list` | No | A download link for a finished list, good for 24 hours: google_ads_csv (placements for Google Ads, in ranked order), full_csv (every channel in the full list) or workbook (Excel: every view plus how it was made). Give the person the link. |
+| `request_channel_data` | Yes | When a seed is short on data (check_inclusion_channels says what's missing and what it would add), records a request for the data team. It starts no collection itself. |
+
+## Trends
+
+A question kept on a set of channels, answered daily or weekly.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `create_trend` | Yes | Starts a Trends watch: a question kept on channels, run daily or weekly, saying which channels did and didn't mention it. Give channelIds, or a projectId with a selection. It runs once now and spends AI on each run, so confirm with the user first. Terms are worked out from the question unless you give them. |
+| `list_trends` | No | The Trends watches in this workspace: the question, how often, and when each last ran. It spends nothing. |
+| `get_trend` | No | A Trends watch and its latest run: which channels mentioned it, with quotes and videos, which didn't, which had nothing new collected, and what's being collected. It spends nothing. |
+| `run_trend` | Yes | Runs a Trends watch now, over what's been collected since its last run. It spends AI when the watch reads a topic. |
+| `update_trend` | Yes | Changes a Trends watch: pause or resume it, how often it runs, or whether its owner is emailed. |
+
+## Projects
+
+Everyone around a set of starting channels, with questions, lenses, reports and lists.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_projects` | No | The workspace's Projects (audience research): name, client, what they make, link. |
+| `get_project` | No | A project's brief, setup and build status, its questions and groups, the audiences on its map, and the reports, summaries, lists and hand-added channels made from it. Read this first: name selections exactly as it lists them. |
+| `propose_project` | No | Reads what someone needs (a brief, a client email, a goal) and proposes a project: a name, the channels the map grows from, which of its questions the data answers and which it can't, its groups, and how to split the channels. Creates nothing. |
+| `create_project` | Yes | Saves a project and starts mapping everyone around its starting channels, ranked against the brief (paid AI review of channels not seen before). Early results are explorable in about 20 seconds; the build takes minutes. With no channels, it reads them from the brief. Names that match several channels come back as choices and nothing is created. Ask the person before calling it: it's a paid build. Rebuild an old one by passing its id as basedOn: it opens as a new version. |
+| `get_project_map` | No | The audiences on a project's map (the ranked map once built, early results before), which are about the brief, and a page of its channels, most relevant first: one audience's, or a search's, with what the search found outside the map. A group shows the whole vertical on YouTube instead. fresh rebuilds it. |
+| `update_project_channels` | Yes | Channels added to a project's map by hand. add places it if we hold data on it; collect reads its latest 10 videos and comments (YouTube quota) so it can join the map once that lands; remove takes it off; status lists them and places any whose collection finished. |
+| `get_project_answers` | No | How many channels and views a selection has, posting, length and Shorts habits, what top performers do differently, and the biggest channels and videos. For a group, the whole vertical. A group not looked up before needs findGroup: a one-time AI pass of a few minutes. |
+| `create_project_summary` | Yes | A written summary of a selection: who they are, where else they comment, the groups around them and what to do next, saved on the project. A saved one comes back at once; fresh writes it again. About 20 seconds to a minute. |
+| `get_project_summary` | No | One saved summary by its selection's name or id; with neither, what's saved on the project. |
+| `ask_project_question` | Yes | Answers a question from the data: sizes and views, habits, what top performers do differently, which channels an audience also follows, comparisons, rankings, finding channels. Every number is computed; the answer is saved on the project. With a report, a change ("drop the Shorts section") happens on it and a question is kept under it; with a section too, it's answered from what the section shows when that's enough. What the data can't answer comes back with why. |
+| `list_project_questions` | No | The questions answered on a project, newest first, with their answers. |
+| `delete_project_question` | Yes | Removes a question and its answer from the project. |
+| `send_question_to_research_team` | Yes | For a question the map can't answer: sends it to our research team, who follow up. Promise no timing. |
+| `run_project_lens` | Yes | One look at a selection's audience, kept on the project: watching (what else they watch), passions (what they're passionate about), saying (what they say and ask for, with real quotes) or how (tone and vocabulary against a baseline). Takes 10 to 90 seconds, so it may reply "working". A saved one comes back at once unless refresh. |
+| `run_project_content_analysis` | Yes | A sample of about 240 videos from a selection, read by AI for thumbnails, formats, talent and podcasts: top performers against the rest. About a minute, so it may reply "working". A saved one comes back at once unless refresh. Needs at least 8 channels. |
+| `create_project_report` | Yes | Makes the report for a selection and fills it in: a summary, the numbers, each section's reading of comments and videos, questions asked of it, and the data behind it. It takes a few minutes and spends AI, so it may reply "working"; progress shows in get_job. A selection that already has a report reopens it and fills in what's missing. With no selection, the report the project opens on. It opens the same in the app. |
+| `get_project_report` | No | A report as it stands: what's been made is there, what hasn't says so. It spends nothing. |
+| `list_project_reports` | No | The reports made on a project, with their sections. |
+| `update_project_report` | Yes | Removes sections by title (loosely matched: "the Shorts one" works) and adds new ones in a few words each, matched to what a report computes. Other reports don't change. What a section can't compute comes back in notAdded: ask those with ask_project_question. |
+| `share_project_report` | Yes | Freezes a report into a dated, read-only page with a link to share and a PDF link that opens the print dialog (workspace access). It runs no new AI work, so fill the report in first. |
+| `create_project_inclusion_list` | Yes | Starts an inclusion list from part of a project's map, with its strongest channels as seeds and the project's brief and filters. Starts a paid list run; check it with get_inclusion_list. |
+| `get_inclusion_list_map` | No | A finished inclusion list's channels as an audience graph: its audiences, and a page of its channels. |
+| `suggest_related_channels` | No | Channels whose commenters overlap most with these, with the share of their commenters who also comment there. No AI. |
+| `create_creator_report` | Yes | For a creator or brand who wants to understand their own audience: who they are, what they love and ask for, likes and dislikes, where else they go, hidden gems, products they mention, content and product ideas. Makes a project with no map. Usually 1 to 2 minutes, so it may reply "working". Names that match several channels come back as choices. |
+| `get_creator_report` | No | A creator project's report, or that it's still being written. |
+
+## Campaigns and targeting
+
+Campaigns, their audiences and targeting.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_campaigns` | No | Newest first. |
+| `get_campaign` | No | One campaign, with its audiences and Google Ads link. |
+| `create_campaign` | Yes | Creates the campaign exactly as the app's New campaign form does. Audiences you pass are attached and start generating targeting right away. Nothing is sent to Google Ads. |
+| `update_campaign` | Yes | Send only the fields to change. Google Ads settings are saved in Fandom; a campaign already in Google Ads picks them up on its next sync from the app. |
+| `delete_campaign` | Yes | Removes it from Fandom. A linked Google Ads campaign is not touched. |
+| `add_campaign_audience` | Yes | Attaches a saved audience and, by default, starts generating its targeting. |
+| `get_campaign_targeting` | No | Each audience's keywords, segments, topics and websites. Everything listed is in the campaign's targeting and goes to Google Ads on the next sync. |
+| `generate_campaign_targeting` | Yes | Starts generating in the background. With no `audienceIds`, generates every audience that has none yet; naming an audience regenerates it. Audiences need data stores. Poll Get targeting until `ready`. |
+| `edit_campaign_targeting` | Yes | The app's Add and Delete for one audience. Removed terms come out of Google Ads on the next sync. Not allowed while the audience is generating. |
+| `create_google_ads_campaign` | Yes | Creates the campaign in Google Ads, paused, exactly as the campaign page does. It needs a budget above 0, a bidding strategy, and a Search, Demand Gen or Display campaign (Video campaigns can't be created this way). Nothing spends until someone turns it on in Google Ads. Targeting goes over when someone syncs the campaign in the app. |
+
+## Google Ads
+
+Accounts, performance, and campaigns created paused.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_google_ads_accounts` | No | The workspace's connected Google Ads accounts. |
+| `get_google_ads_performance` | No | Impressions, clicks, cost and conversions for the Fandom campaigns in one account. |
+
+## Audiences and data stores
+
+The YouTube channels and videos audiences are built from.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_audiences` | No | Saved audiences, newest first. |
+| `get_audience` | No | One saved audience. |
+| `create_audience` | Yes | Names must be unique in the workspace. Link data stores so targeting has real data behind it. |
+| `update_audience` | Yes | Send only the fields to change. Lists replace the stored list. Campaigns keep the copy they attached. |
+| `delete_audience` | Yes | Removes it from the workspace. Campaigns that use it keep their copy. |
+| `list_data_stores` | No | The workspace's data stores, newest first. |
+| `get_data_store` | No | Check `status` to see when collection is done. |
+| `create_data_store` | Yes | Collects YouTube channels and videos, with their comments, in the background. Starts as `collecting`; poll Get a data store until `ready`. |
+| `update_data_store` | Yes | Library stores can't be changed. |
+| `delete_data_store` | Yes | Removes it from the workspace. Library stores can't be deleted. |
+
+## Brands
+
+The brands campaigns belong to.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_brands` | No | Newest first. |
+| `get_brand` | No | One brand and how many campaigns use it. |
+| `create_brand` | Yes | Campaigns created with this brand inherit its name, website and description. |
+| `update_brand` | Yes | Send only the fields to change. Existing campaigns keep the brand details they were created with. |
+| `delete_brand` | Yes | Removes it from the workspace. Its campaigns stay. |
+
+## Workspace and slow work
+
+What's in the workspace, and collecting the answer of a slow tool.
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `get_workspace` | No | The workspace this key belongs to: counts and the most recent campaigns. A good first call. |
+| `search_workspace` | No | Find campaigns, audiences, data stores and brands by name in one call. |
+| `get_job` | No | Collects the result of a tool that replied status "working". While it's still going it waits a little and says so again; call it again. Results stay for 24 hours. |
+
+## Workspaces
+
+| Tool | Changes anything | What it does |
+| --- | --- | --- |
+| `list_fandom_workspaces` | No | The Fandom workspaces you can use, and which one tools use when you don't name one. |

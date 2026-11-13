@@ -11,10 +11,10 @@ Authorization: Bearer fnd_...
 
 Workspace admins create keys on [the API key page](https://www.fandom.ai/api-keys) (**Settings → API & MCP** in Fandom).
 
-A key belongs to one workspace and acts as the admin who created it. Its scopes decide what it can do, whatever that person's role. It stops working when it's revoked there, or when that person leaves the workspace.
+A key belongs to one workspace and acts as the admin who created it. Its scopes decide what it can do, whatever that person's role; Google Ads accounts still follow that person's account access. It stops working when it's revoked there, or within about five minutes of that person leaving the workspace.
 
 <Note>
-  MCP clients don't need a key. They [sign in](/guides/mcp) with your Fandom account, and your role applies.
+  MCP clients don't need a key. They [sign in](/guides/mcp) with your Fandom account (on super.fans, Fandom's sign-in service), and your role applies.
 </Note>
 
 ## Scopes
@@ -23,7 +23,7 @@ You choose what a key can do when you create it. A request without the scope it 
 
 | Scope | Allows |
 | --- | --- |
-| `campaigns:read` | Read campaigns and their targeting |
+| `campaigns:read` | Read campaigns and their targeting; get and search the workspace |
 | `campaigns:write` | Create, update and delete campaigns; generate and edit targeting |
 | `audiences:read`, `audiences:write` | Read, or create and change, audiences |
 | `datasets:read`, `datasets:write` | Read, or create and change, data stores |
@@ -35,11 +35,15 @@ You choose what a key can do when you create it. A request without the scope it 
 | `inclusion-lists:read`, `inclusion-lists:write` | Read and download, or create and run, inclusion lists. MCP only. |
 | `projects:read`, `projects:write` | Read, or create and work on, projects. MCP only. |
 
-MCP-only scopes apply when a key is [used with an MCP client](/guides/mcp#use-an-api-key-instead). There are no API endpoints for them.
+MCP-only scopes apply when a key is [used with an MCP client](/guides/mcp#use-an-api-key-instead). The API uses two of them only to map an inclusion list or a project with `POST /exploration/map`.
 
 ## Limiting a key
 
-When you create a key you can also limit it to certain Google Ads accounts or campaigns. A key limited to campaigns can't create new ones.
+When you create a key you can also limit it three ways:
+
+- **Google Ads accounts:** it can only use those accounts.
+- **Fandom campaigns:** it sees only those campaigns and can't create campaigns, including from Audience Exploration.
+- **Google Ads campaigns:** it can't create campaigns in Google Ads, and its performance report shows only those campaigns, without daily totals.
 
 ## Safe retries
 
@@ -53,4 +57,4 @@ curl https://www.fandom.ai/api/v1/campaigns \
   -d '{ "name": "Spring launch", "campaignType": "SEARCH" }'
 ```
 
-Keys are remembered for 24 hours. Reusing one with a different body returns `409`.
+Keys are remembered for 24 hours, per workspace and endpoint, and can be up to 200 characters. Reusing one with a different body returns `409`, and so does retrying while the first request is still running or after it failed (use a new key then). Over MCP, tools that change something take an `idempotencyKey` argument instead of the header.

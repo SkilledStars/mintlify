@@ -1,11 +1,11 @@
 ---
 title: "Build a campaign"
-description: "From a brand to a paused Google Ads campaign, in six calls."
+description: "From a brand to a paused Google Ads campaign, in six steps."
 ---
 
 Prefer to ask? Your [MCP client](/guides/mcp-examples) can do all of this for you.
 
-Each step uses the result of the one before. Set your key first:
+Each step uses the result of the one before. Your key needs read + write access: `brands:write`, `datasets:read` and `datasets:write`, `audiences:write`, `campaigns:read` and `campaigns:write`, and `google-ads:read` and `google-ads:write`. Set it first:
 
 ```bash
 export FANDOM_API_KEY=fnd_...
@@ -65,17 +65,18 @@ export FANDOM=https://www.fandom.ai/api/v1
         "objective": "Sell the spring sets to parents",
         "brandId": "BRAND_ID",
         "audienceIds": ["AUDIENCE_ID"],
-        "budget": 50
+        "budget": 50,
+        "biddingStrategy": "MAXIMIZE_CONVERSIONS"
       }'
     ```
-    Attached audiences start generating targeting straight away.
+    Attached audiences start generating targeting straight away. Creating it in Google Ads later needs a budget above 0 and a bidding strategy, so set them now.
   </Step>
 
   <Step title="Review the targeting">
     ```bash
     curl $FANDOM/campaigns/CAMPAIGN_ID/targeting -H "Authorization: Bearer $FANDOM_API_KEY"
     ```
-    Each audience shows `generating`, then `ready` with its terms, usually within 90 seconds. Everything listed goes to Google Ads. To change it, add or remove terms, using the audience's `id` from this response:
+    Each audience shows `generating`, then `ready` with its terms, usually within 90 seconds. Everything listed goes to Google Ads the next time someone syncs the campaign in Fandom. To change it, add or remove terms, using the audience's `id` from this response:
 
     ```bash
     curl -X PATCH $FANDOM/campaigns/CAMPAIGN_ID/targeting \
@@ -94,6 +95,12 @@ export FANDOM=https://www.fandom.ai/api/v1
       -H "Authorization: Bearer $FANDOM_API_KEY" -H "Content-Type: application/json" \
       -d '{ "customerId": "1234567890" }'
     ```
-    The campaign is created **paused**. Nothing spends until someone turns it on in Google Ads. `GET /google-ads/accounts` lists the accounts you can use.
+    The campaign is created **paused**, without its targeting. Open its `url` in Fandom and sync it to send the targeting over. Nothing spends until someone turns it on in Google Ads. `GET /google-ads/accounts` lists the accounts you can use.
+
+    Search, Demand Gen and Display campaigns can be created this way; Video campaigns can't.
   </Step>
 </Steps>
+
+<Note>
+  Some things only the Fandom app does: syncing targeting to Google Ads, turning a campaign on, and changing a campaign once it's in Google Ads.
+</Note>

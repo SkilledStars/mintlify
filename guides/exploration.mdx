@@ -3,7 +3,12 @@ title: "Explore an audience"
 description: "See which channels an audience also watches, and how they group."
 ---
 
-Maps are built from who actually comments on which YouTube channels. Channels whose commenters overlap are grouped together. Keys need the `exploration:read` scope.
+Maps are built from who actually comments on which YouTube channels. Channels whose commenters overlap are grouped together. Keys need the `exploration:read` scope. Set your key first:
+
+```bash
+export FANDOM_API_KEY=fnd_...
+export FANDOM=https://www.fandom.ai/api/v1
+```
 
 <Steps>
   <Step title="Find a starting point">
@@ -20,16 +25,16 @@ Maps are built from who actually comments on which YouTube channels. Channels wh
       -H "Content-Type: application/json" \
       -d '{ "sources": [{ "type": "channel", "channelId": "UCX6OQ3DkcsbYNE6H8uQQuVA" }] }'
     ```
-    Sources can also be `query` (plain words), `channels`, `topic`, `brand`, `audience`, `campaign`, `link`, `inclusion_list` or `project`. Combine up to eight.
+    Sources can also be `query` (plain words), `channels`, `topic`, `brand`, `audience`, `campaign`, `link` (a channel or video link, an @handle, or a website), `inclusion_list` or `project`. Combine up to eight. Mapping an inclusion list or a project also needs the `inclusion-lists:read` or `projects:read` scope.
 
     The result lists up to 110 channels (`size` up to 160) and their `groups`. The `core` group is the audience you asked about. For each group and channel:
 
     | Field | Meaning |
     | --- | --- |
     | `people` | Distinct commenters |
-    | `reach` | Share of the core audience found here |
+    | `reach` | Share of the core audience found here. For the core group: the share who also comment on its other channels. |
     | `concentration` | Share of these people who are in the core audience |
-    | `fanDensity` | How over-represented the core audience is here. 1.3 means 30% more than elsewhere on the map. |
+    | `fanDensity` | How many times more common the core audience is here than among everyone we see commenting on YouTube. 1.3 means 30% more. Empty for the core group. |
   </Step>
 
   <Step title="Look closer at a channel">
@@ -41,6 +46,6 @@ Maps are built from who actually comments on which YouTube channels. Channels wh
   </Step>
 </Steps>
 
-To turn a map into a campaign, collect the channels you like into a [data store](/guides/campaign), then build an audience from it.
+To turn a map into a campaign, collect the channels you like into a [data store](/api-reference/data-stores/create-a-data-store), then build an audience from it. Over MCP, `create_audience_from_channels` does both in one step.
 
-MCP goes further: split a map by life stage or themes, compare brands, find small channels with loyal audiences and write reports. See [what you can ask](/guides/mcp-examples).
+MCP goes further: split a map by groups, themes, life stage or anything you describe, compare products or interests, open groups, find small channels with loyal audiences, see what fans subscribe to, and write reports. See [what you can ask](/guides/mcp-examples) and [the tools](/guides/mcp-tools).
