@@ -16,9 +16,12 @@ For "who are X on YouTube", "what else do fans of Y watch", "who buys from site.
 6. **Go further.**
    - `get_map_channel`: one channel's panel on the map.
    - `get_fan_subscriptions`: what these fans subscribe to beyond the map.
+   - `get_map_brands`: which brands sponsor the map's channels, and which they link to as affiliates ("who sponsors these channels?").
+   - `check_family_accounts`: on maps where kids comment, which groups are a kid's own viewing and which a parent's on the same account.
    - `get_exploration_macro_view`: the wider landscape, about 1,500 channels.
    - A group's `expand` source maps that group on its own.
-7. **Write it up.** `create_audience_report` turns the map into a written report (`save: true` keeps it in the workspace).
-8. **Keep it.** `create_audience_from_channels` saves chosen channels as an audience, or as a draft campaign. That changes the workspace, so ask first.
+7. **Answer the map's suggested questions** with these: who sponsors these channels → `get_map_brands`; what else this audience cares about → a `themes` split; which smaller creators to partner with → `list_exploration_channels` with `sort: "gems"`.
+8. **Write it up.** `create_audience_report` turns the map into a written report (`save: true` keeps it in the workspace); its `reportUrl` opens it in the app, where it prints to PDF.
+9. **Keep it.** When they want to come back to a map, `save_map` keeps it for the workspace, as the app's Save map does (`list_saved_maps` shows them; a saved map's name works as a source). `create_audience_from_channels` saves chosen channels as an audience, or as a draft campaign: that sets up campaign work, so check with them first.
 
 Good first answer: the two or three groups that matter most, each with people, reach, fan density and three channels, plus the map link and one suggested split.

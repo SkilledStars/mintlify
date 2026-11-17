@@ -12,6 +12,8 @@ For "find creators for…", "build a placement list", "which channels should we 
    - `fan_density` shows channels a seed's commenters subscribe to far more than usual,
    - `flagged` shows brand-safety flags for review (`onList` says which are on the ranked list).
 6. **Hand it over.** `export_inclusion_list` gives a link: `google_ads_csv` for placements, `full_csv`, or a `workbook`. Links last 24 hours.
-7. **Change it.** `update_inclusion_list` edits settings (seeds, excluded channels, size, filters). Running it again (`run_inclusion_list`) is paid: ask first.
+7. **Change it.** `update_inclusion_list` edits settings (seeds, size, filters). To leave out channels already bought, use `addExcludeChannels` (and `removeExcludeChannels` to take one back); `excludeChannels` replaces the whole list. Running it again (`run_inclusion_list`) is paid: ask first.
+8. **Names that could be several channels** take the closest, as the app does; the reply's `matchedLoosely` names the pick and the alternatives with their ids. Mention it when the pick might not be the one they meant.
+9. **Map it.** `build_exploration_map` with the list as a source (`{ type: "inclusion_list", listId }`) maps its top channels.
 
 Good answer: how many channels, the top ten with why each fits, anything flagged on the list itself, and the download link.

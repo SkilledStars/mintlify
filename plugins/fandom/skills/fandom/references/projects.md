@@ -11,9 +11,11 @@ For "help me understand the audience of…", a client research brief, or a repor
 5. **Go deeper (paid, ask first).**
    - `run_project_lens` runs one lens: watching, passions, saying or how.
    - `run_project_content_analysis` reads formats, length and posting.
-6. **Make the report.** `create_project_report` makes and fills a report for a selection. `update_project_report` adds or removes sections, and `share_project_report` freezes it into a link to share.
-7. **Lists and watches.**
+6. **Make the report.** `create_project_report` makes and fills a report for a selection. `update_project_report` adds or removes sections, and `share_project_report` freezes it into a link to share, with a PDF (creator reports too).
+7. **Keep it current (spends AI each run, ask first).** `set_report_schedule` repeats a report daily or weekly and emails what changed; `run_project_report` runs it now; `get_report_changes` says what moved; `list_scheduled_reports` shows everything repeating.
+8. **Turn an answer into a list.** `list_question_channels` gives every channel behind a finding, paged, ready for `create_audience_from_channels`, a list or a trend.
+9. **Lists and watches.**
    - `create_project_inclusion_list` makes a list from part of the map (paid).
-   - `create_trend` keeps a question on chosen channels, daily or weekly (spends AI each run).
+   - `create_trend` keeps a question on chosen channels, daily or weekly (spends AI each run). `preview_trend` shows the first 30 days before it starts; `get_trend_run` and `list_trend_runs` read its runs and how they compare; `update_trend_questions` and `update_trend_themes` change what it follows.
 
 Good answer: the headline finding, the three numbers that support it, the report link, and what to ask next.

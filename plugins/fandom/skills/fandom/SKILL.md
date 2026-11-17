@@ -27,7 +27,7 @@ This skill needs Fandom's MCP server (`https://www.fandom.ai/mcp`). If its tools
 | Who an audience is, where else they gather, what they're into | [references/explore.md](references/explore.md) |
 | Creators or channels to sponsor or advertise on | [references/lists.md](references/lists.md) |
 | A research project with questions and a report to share | [references/projects.md](references/projects.md) |
-| A campaign with targeting, or a Google Ads draft | [references/campaigns.md](references/campaigns.md) |
+| A campaign with targeting, synced to Google Ads | [references/campaigns.md](references/campaigns.md) |
 
 ## Answer like an analyst
 
@@ -42,4 +42,4 @@ This skill needs Fandom's MCP server (`https://www.fandom.ai/mcp`). If its tools
 - **People** are people who comment, not everyone who watches. Never claim ages, genders, incomes, watch time or private analytics; life stage and themes are inferred from what people comment on, and should be described that way.
 - **Reach** is the share of the audience that also comments on a group's or channel's videos. **Fan density** is how many times more common the audience is there than across YouTube, or than the comparison the reply names.
 - **Flags** on a list are a starting point for a brand-safety review, never a finding, and never a reason a channel was removed.
-- **Google Ads campaigns are created paused.** Nothing spends until a person turns it on in Google Ads, and targeting reaches Google Ads when they sync the campaign in Fandom. Never say otherwise.
+- **Google Ads campaigns are created paused.** No tool turns one on: nothing spends until a person turns it on in Google Ads. `sync_campaign_to_google_ads` sends settings, targeting and creative, as the app's Sync; on a campaign already running, what it sends takes effect right away. Never say otherwise.
